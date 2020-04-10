@@ -3,7 +3,7 @@ Spring Web Services for Webuy android app
 
 ## UML Model Class Diagram
 
-![Class diagral unavailable](apidoc/model.png)
+![Class diagram](apidoc/model.png)
 
 ## Service list
 ![WebService List](apidoc/services.png)
