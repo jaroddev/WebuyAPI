@@ -35,3 +35,4 @@ Get all the invitations to a group you've got recently.
 
 ![log the user in](apidoc/login.png)
 
+![log the user out](apidoc/logout.png)
