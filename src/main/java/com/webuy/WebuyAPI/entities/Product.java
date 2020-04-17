@@ -16,9 +16,6 @@ public class Product implements Serializable {
 	private String name;
 	private int stock;
 	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	private Shop shop;
-	
 	public Long getId() {
 		return id;
 	}
@@ -43,9 +40,4 @@ public class Product implements Serializable {
 		this.stock = stock;
 	}
 
-	/*
-	 * public Shop getShop() { return shop; }
-	 * 
-	 * public void setShop(Shop shop) { this.shop = shop; }
-	 */	
 }
