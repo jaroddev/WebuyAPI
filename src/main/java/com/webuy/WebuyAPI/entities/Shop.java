@@ -1,12 +1,16 @@
 package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Shop implements Serializable {
@@ -15,11 +19,13 @@ public class Shop implements Serializable {
 	private Long id;
 	private String name;
 	private String image;
+	
+	@OneToOne
 	private Address address;
-	@OneToMany
-	private Collection<Offer> offers;
-	@OneToMany
-	private Collection<Product> products;
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "shopId")
+	private List<Product> products = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -53,19 +59,22 @@ public class Shop implements Serializable {
 		this.address = address;
 	}
 	
-	public Collection<Offer> getOffers() {
-		return offers;
-	}
-	
-	public void setOffers(Collection<Offer> offers) {
-		this.offers = offers;
-	}
-
-	public Collection<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 	
-	public void setProducts(Collection<Product> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
-	}
+	}	
+	
+	public void addProduct(Product product) {
+		products.add(product);
+        // product.setShop(this);
+    }
+ 
+    public void removeProduct(Product product) {
+    	products.remove(product);
+        // product.setShop(null);
+    }
+	
 }
