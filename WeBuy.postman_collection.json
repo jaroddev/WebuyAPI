@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "b8ef8a4a-e0ae-403a-898b-87a9d361ce90",
+		"name": "WeBuy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Shop Service",
+			"item": [
+				{
+					"name": "Get Shop List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop"
+							]
+						},
+						"description": "Récupére les magasins, **___pagination___** disponible."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shop's Promotion Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/2/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"2",
+								"groups"
+							]
+						},
+						"description": "Get all the offers group in a shop, you got the shop, you want to participate to a group.\nSo you want a list of existing groups."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shop's Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/2/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"2",
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Promotion Group Service",
+			"item": [
+				{
+					"name": "Get a group and its details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/groups/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"groups",
+								"2"
+							]
+						},
+						"description": "Récupère le produit, avec les membres et d'autre info de groupe."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/groups/2/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"groups",
+								"2",
+								"messages"
+							]
+						},
+						"description": "Get all the messages sent to in a promotion group"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "GET friend requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/2/requests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"2",
+								"requests"
+							]
+						},
+						"description": "Get friend requests sent to a user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Invitation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/2/invitations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"2",
+								"invitations"
+							]
+						},
+						"description": "Get invitations sent to a user"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "Log a user in"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Log a user out"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
