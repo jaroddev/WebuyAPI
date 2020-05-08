@@ -6,12 +6,14 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
 
 @Entity
+@Table(name = "groups")
 public class Group implements Serializable {
 	
 	@Id
@@ -19,8 +21,8 @@ public class Group implements Serializable {
 	private Long id;
 	
 	private String name;
-	
 	private int validity;
+	
 	
 	@OneToOne
 	private User leader;
@@ -35,6 +37,7 @@ public class Group implements Serializable {
 	
 	@OneToOne
 	private Offer offer;
+	
 
 	public Long getId() {
 		return id;
@@ -52,6 +55,7 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
+	
 	public int getValidity() {
 		return validity;
 	}
@@ -59,7 +63,7 @@ public class Group implements Serializable {
 	public void setValidity(int validity) {
 		this.validity = validity;
 	}
-
+	
 	public User getLeader() {
 		return leader;
 	}
