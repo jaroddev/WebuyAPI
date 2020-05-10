@@ -69,12 +69,10 @@ public class Shop implements Serializable {
 	
 	public void addProduct(Product product) {
 		products.add(product);
-        // product.setShop(this);
     }
  
     public void removeProduct(Product product) {
     	products.remove(product);
-        // product.setShop(null);
     }
 	
 }
