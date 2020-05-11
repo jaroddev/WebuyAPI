@@ -2,6 +2,7 @@ package com.webuy.WebuyAPI.services;
 
 import java.util.Collection;
 
+import com.webuy.WebuyAPI.entities.Address;
 import com.webuy.WebuyAPI.entities.Shop;
 
 public interface ShopService {

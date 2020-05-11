@@ -5,7 +5,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webuy.WebuyAPI.dao.AddressJPARepository;
 import com.webuy.WebuyAPI.dao.ShopJPARepository;
+import com.webuy.WebuyAPI.entities.Address;
 import com.webuy.WebuyAPI.entities.Shop;
 
 @Service
@@ -13,6 +15,9 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Autowired
 	ShopJPARepository repo;
+	
+	@Autowired
+	AddressJPARepository addressRepo;
 	
 	@Override
 	public Collection<Shop> getShops() {
@@ -26,6 +31,8 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public void createShop(Shop shop) {
+		Address newAddress = addressRepo.saveAndFlush(shop.getAddress());
+		shop.setAddress(newAddress);
 		repo.saveAndFlush(shop);
 	}
 
@@ -33,6 +40,9 @@ public class ShopServiceImpl implements ShopService {
 	public void updateShop(Long id, Shop shop) {
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
+			Address newAddress = addressRepo.saveAndFlush(shop.getAddress());
+			shop.setAddress(newAddress);
+			shop.setId(id);
 			repo.saveAndFlush(shop);
 		}
 	}

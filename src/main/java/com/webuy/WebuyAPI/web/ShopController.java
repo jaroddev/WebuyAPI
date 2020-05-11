@@ -32,24 +32,24 @@ public class ShopController {
 		this.shopService.createShop(shop);
 	}
 	
-	@PutMapping("/shop")
+	@PutMapping("/shop/{id}")
 	public void editShop(@PathVariable Long id, @RequestBody Shop shop) {
 		this.shopService.updateShop(id, shop);
 	}
 	
-	@DeleteMapping("/shop")
+	@DeleteMapping("/shop/{id}")
 	public void deleteShop(@PathVariable Long id) {
 		this.shopService.deleteShop(id);
 	}
 	
-	@GetMapping("/shop/{shopId}/groups")
+	@GetMapping("/shop/{id}/groups")
 	public boolean getGroupList(@PathVariable Long id) {
 		//this.shopService.getOne(id).get
 		
 		return true;
 	}	
 	
-	@GetMapping("/shop/{shopId}/products")
+	@GetMapping("/shop/{id}/products")
 	public boolean getProductList(@PathVariable Long id) {
 		// use the shop Repository
 		// true return type is List<Product>
