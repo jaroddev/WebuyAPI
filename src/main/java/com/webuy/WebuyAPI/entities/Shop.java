@@ -14,13 +14,15 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Shop implements Serializable {
+	
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	private String name;
 	private String image;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne
 	private Address address;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+// import com.webuy.WebuyAPI.entities.Group;
 import com.webuy.WebuyAPI.entities.Shop;
 import com.webuy.WebuyAPI.services.ShopServiceImpl;
 
@@ -20,11 +21,14 @@ public class ShopController {
 	@Autowired
 	private ShopServiceImpl shopService;
 
-	public ShopController() {}
-	
 	@GetMapping("/shop")
 	public Collection<Shop> getShopList(){
 		return this.shopService.getShops();
+	}
+	
+	@GetMapping("/shop/{id}")
+	public Shop getShop(@PathVariable Long id){
+		return this.shopService.getOne(id);
 	}
 	
 	@PostMapping("/shop")
@@ -45,6 +49,7 @@ public class ShopController {
 	@GetMapping("/shop/{id}/groups")
 	public boolean getGroupList(@PathVariable Long id) {
 		//this.shopService.getOne(id).get
+		//Collection<Group>
 		
 		return true;
 	}	

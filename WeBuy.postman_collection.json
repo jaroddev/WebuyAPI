@@ -213,6 +213,37 @@
 							"response": []
 						},
 						{
+							"name": "Get a shop",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/shop/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shop",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Create a shop",
 							"protocolProfileBehavior": {
 								"disabledSystemHeaders": {
@@ -230,7 +261,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"id\": 6,\n\t\t\"city\": \"Villeneuve\",\n\t\t\"postalCode\": \"04180\",\n\t\t\"department\": \"Alpes-de-Haute-Provence\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/villeneuve\",\n\t\"name\": \"3nd Magasin Postman\"\n}"
+									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"Toulouse\",\n\t\t\"postalCode\": \"31000\",\n\t\t\"department\": \"31\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/Toulouse\",\n\t\"name\": \"4th Magasin Postman\"\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8080/shop",
@@ -259,7 +290,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"id\": 1,\n\t\t\"city\": \"Tours\",\n\t\t\"postalCode\": \"37000\",\n\t\t\"department\": \"37\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/carrefour\",\n\t\"name\": \"Carrefour\"\n}",
+									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"Lyon\",\n\t\t\"postalCode\": \"69000\",\n\t\t\"department\": \"69\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/Auchan\",\n\t\"name\": \"Auchan\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -267,7 +298,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/shop/1",
+									"raw": "http://localhost:8080/shop/18",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -275,7 +306,7 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"1"
+										"18"
 									]
 								}
 							},
@@ -287,7 +318,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shop/9",
+									"raw": "http://localhost:8080/shop/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -295,7 +326,7 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"9"
+										"3"
 									]
 								}
 							},
