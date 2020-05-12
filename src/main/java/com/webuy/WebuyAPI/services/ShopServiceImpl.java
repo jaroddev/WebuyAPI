@@ -39,7 +39,7 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public void createShop(Shop newShop) {
-		repo.saveAndFlush(newShop);
+		repo.save(newShop);
 	}
 
 	@Override
@@ -57,7 +57,6 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void deleteShop(Long id) {
 		repo.findById(id).ifPresent(shop -> {
-			addressRepo.deleteById(shop.getAddress().getId());
 			repo.deleteById(id);
 		});		
 	}
