@@ -24,7 +24,7 @@ public class ProductController {
 	
 	@GetMapping("/product")
 	public Collection<Product> getShopList(){
-		return this.productService.getProducts();
+		return this.productService.getAll();
 	}
 	
 	@PostMapping("/product")

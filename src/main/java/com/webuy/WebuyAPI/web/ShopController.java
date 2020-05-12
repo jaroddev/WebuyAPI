@@ -23,7 +23,7 @@ public class ShopController {
 
 	@GetMapping("/shop")
 	public Collection<Shop> getShopList(){
-		return this.shopService.getShops();
+		return this.shopService.getAll();
 	}
 	
 	@GetMapping("/shop/{id}")

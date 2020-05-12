@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService {
 	ProductJPARepository repo;
 
 	@Override
-	public Collection<Product> getProducts() {
+	public Collection<Product> getAll() {
 		return repo.findAll();
 	}
 

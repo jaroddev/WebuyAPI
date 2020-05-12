@@ -20,7 +20,7 @@ public class ShopServiceImpl implements ShopService {
 	AddressJPARepository addressRepo;
 	
 	@Override
-	public Collection<Shop> getShops() {
+	public Collection<Shop> getAll() {
 		return repo.findAll();
 	}
 	
