@@ -22,7 +22,7 @@ public class Shop implements Serializable {
 	private String name;
 	private String image;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
