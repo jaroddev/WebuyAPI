@@ -25,9 +25,13 @@ public class Shop implements Serializable {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "shopId")
 	private List<Product> products = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "offerId")
+	private List<Offer> offers = new ArrayList<>();
 	
 	public Long getId() {
 		return id;

@@ -20,8 +20,6 @@ public class ProductController {
 	@Autowired
 	private ProductServiceImpl productService;
 
-	public ProductController() {}
-	
 	@GetMapping("/product")
 	public Collection<Product> getShopList(){
 		return this.productService.getAll();
