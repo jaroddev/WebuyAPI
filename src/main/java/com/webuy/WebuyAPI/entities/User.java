@@ -15,13 +15,19 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	// For authentication
 	private String email;
 	private String phoneNumber;
 	private String password;
 	private String role;
 
+	// Shop recommendation
 	@OneToOne
 	private Address address;
+
+	// Define the user to other user
+	private String name;
 	
 	@ManyToMany
 	private Collection<User> friends;
@@ -72,6 +78,14 @@ public class User implements Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name ;
 	}
 
 	public Collection<User> getFriends() {
