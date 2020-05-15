@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
@@ -27,8 +28,7 @@ public class Group implements Serializable {
 	@OneToOne
 	private User leader;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "memberId")
+	@ManyToMany
 	private Collection<User> members;
 	
 	@OneToMany(cascade = CascadeType.ALL)
