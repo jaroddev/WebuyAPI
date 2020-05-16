@@ -3,6 +3,7 @@ package com.webuy.WebuyAPI.entities;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -23,7 +24,7 @@ public class User implements Serializable {
 	private String role;
 
 	// Shop recommendation
-	@OneToOne
+	@OneToOne(cascade= CascadeType.PERSIST)
 	private Address address;
 
 	// Define the user to other user
