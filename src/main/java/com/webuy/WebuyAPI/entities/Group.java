@@ -6,9 +6,8 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
@@ -21,24 +20,18 @@ public class Group implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
-	private String name;
-	private int validity;
-	
-	
 	@OneToOne
 	private User leader;
 	
 	@ManyToMany
 	private Collection<User> members;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "messageId")
-	private Collection<GroupMessage> messages;
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private Collection<Chat> chats;
 	
 	@OneToOne
 	private Offer offer;
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -47,23 +40,6 @@ public class Group implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	
-	public int getValidity() {
-		return validity;
-	}
-
-	public void setValidity(int validity) {
-		this.validity = validity;
-	}
-	
 	public User getLeader() {
 		return leader;
 	}
@@ -80,14 +56,22 @@ public class Group implements Serializable {
 		this.members = members;
 	}
 
-	public Collection<GroupMessage> getMessages() {
-		return messages;
+	public Collection<Chat> getChats() {
+		return chats;
 	}
 
-	public void setMessages(Collection<GroupMessage> messages) {
-		this.messages = messages;
+	public void setChat(Collection<Chat> chats) {
+		this.chats = chats;
+	}
+	
+	public void addChat(Chat chat) {
+		chats.add(chat);
 	}
 
+	public void removeChat(Long chatId) {
+		this.chats.removeIf( chat -> chat.getId().equals(chatId));
+	}
+	
 	public Offer getOffer() {
 		return offer;
 	}
