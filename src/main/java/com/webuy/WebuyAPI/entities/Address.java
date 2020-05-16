@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address implements Serializable {
@@ -14,25 +15,11 @@ public class Address implements Serializable {
 	private String city;
 	private String postalCode;
 	private String department;
-    private double latitude;
-    private double longitude;
+	private String country;
 	
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
+	@OneToOne
+	private GPSLocationPointer location;
+	
 	public Long getId() {
 		return id;
 	}
@@ -64,4 +51,21 @@ public class Address implements Serializable {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	public GPSLocationPointer getLocation() {
+		return location;
+	}
+	
+	public void setLocation(GPSLocationPointer location) {
+		this.location = location;
+	}
+	
 }
