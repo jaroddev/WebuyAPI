@@ -27,7 +27,7 @@ public class Group implements Serializable {
 	private Collection<User> members;
 	
 	@OneToMany(cascade = CascadeType.REMOVE)
-	private Collection<Chat> chats;
+	private Collection<Message> messages;
 	
 	@OneToOne
 	private Offer offer;
@@ -56,20 +56,20 @@ public class Group implements Serializable {
 		this.members = members;
 	}
 
-	public Collection<Chat> getChats() {
-		return chats;
+	public Collection<Message> getMessages() {
+		return messages;
 	}
 
-	public void setChat(Collection<Chat> chats) {
-		this.chats = chats;
+	public void setChat(Collection<Message> messages) {
+		this.messages = messages;
 	}
 	
-	public void addChat(Chat chat) {
-		chats.add(chat);
+	public void addChat(Message message) {
+		messages.add(message);
 	}
 
-	public void removeChat(Long chatId) {
-		this.chats.removeIf( chat -> chat.getId().equals(chatId));
+	public void removeChat(Long messageId) {
+		this.messages.removeIf( chat -> chat.getId().equals(messageId));
 	}
 	
 	public Offer getOffer() {
