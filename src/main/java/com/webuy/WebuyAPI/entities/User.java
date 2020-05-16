@@ -5,11 +5,11 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.GeneratedValue;
 
 @Entity
 public class User implements Serializable {
@@ -25,14 +25,20 @@ public class User implements Serializable {
 
 	// Shop recommendation
 	@OneToOne(cascade= CascadeType.PERSIST)
-	private Address address;
+	private GPSLocationPointer location;
 
 	// Define the user to other user
 	private String name;
 	
 	@ManyToMany
 	private Collection<User> friends;
-
+	
+	@OneToMany
+	private Collection<User> sentInvitation;
+	
+	@OneToMany
+	private Collection<User> receivedInvitation;
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,12 +79,12 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
-	public Address getAddress() {
-		return address;
+	public GPSLocationPointer getLocation() {
+		return location;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setLocation(GPSLocationPointer location) {
+		this.location = location;
 	}
 	
 	public String getName() {
@@ -96,5 +102,21 @@ public class User implements Serializable {
 	public void setFriends(Collection<User> friends) {
 		this.friends = friends;
 	}
-
+	
+	public Collection<User> getSentInvitation() {
+		return sentInvitation;
+	}
+	
+	public void setSentInvitation(Collection<User> sentInvitatio) {
+		this.sentInvitation = sentInvitatio;
+	}
+	
+	public Collection<User> getReceivedInvitation() {
+		return this.receivedInvitation;
+	}
+	
+	public void setReceivedInvitation(Collection<User> receivedInvitation) {
+		this.receivedInvitation = receivedInvitation;
+	}
+	
 }

@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
 
 @Entity
-public class GroupInvite implements Serializable {
+public class Invitation implements Serializable {
 	
 	@Id
 	@GeneratedValue
@@ -18,13 +18,11 @@ public class GroupInvite implements Serializable {
 	private User sender;
 	
 	@OneToOne
-	private User recipient;
+	private User receiver;
 	
 	@OneToOne
 	private Group group;
 	
-	private String message;
-
 	public Long getId() {
 		return id;
 	}
@@ -42,11 +40,11 @@ public class GroupInvite implements Serializable {
 	}
 
 	public User getRecipient() {
-		return recipient;
+		return receiver;
 	}
 
 	public void setRecipient(User recipient) {
-		this.recipient = recipient;
+		this.receiver = recipient;
 	}
 
 	public Group getGroup() {
@@ -55,14 +53,6 @@ public class GroupInvite implements Serializable {
 
 	public void setGroup(Group group) {
 		this.group = group;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 		
 }
