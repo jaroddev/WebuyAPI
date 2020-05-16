@@ -23,6 +23,8 @@ public class Offer implements Serializable {
 
 	private Date end;
 
+	private double discountPrice;
+
 	private int stock;
 
 	@OneToOne
@@ -66,6 +68,14 @@ public class Offer implements Serializable {
 
 	public void setEnd(Date end) {
 		this.end = end;
+	}
+
+	public double getDiscountPrice() {
+		return discountPrice;
+	}
+
+	public void setDiscountPrice(double discountPrice) {
+		this.discountPrice = discountPrice;
 	}
 
 	public int getStock() {

@@ -14,6 +14,7 @@ public class Product implements Serializable {
 	@GeneratedValue
 	private Long id;
 	private String name;
+	private double price;
 	private int stock;
 	
 	public Long getId() {
@@ -30,6 +31,14 @@ public class Product implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public int getStock() {
