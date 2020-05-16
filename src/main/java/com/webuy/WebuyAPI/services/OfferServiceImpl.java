@@ -24,14 +24,7 @@ public class OfferServiceImpl implements OfferService {
 
 	@Override
 	public Offer getOne(Long id) {
-		Offer offer = null;
-
-		Optional<Offer> optShop = repo.findById(id);
-		if (optShop.isPresent()) {
-			offer = repo.findById(id).get();
-		}
-
-		return offer;
+		return repo.findById(id).orElse(null);
 	}
 
 	@Override
