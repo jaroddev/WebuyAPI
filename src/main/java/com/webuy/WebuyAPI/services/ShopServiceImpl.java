@@ -12,31 +12,30 @@ import com.webuy.WebuyAPI.entities.Shop;
 
 @Service
 public class ShopServiceImpl implements ShopService {
-	
+
 	@Autowired
 	ShopJPARepository repo;
-	
+
 	@Autowired
 	AddressJPARepository addressRepo;
-	
+
 	@Override
 	public Collection<Shop> getAll() {
 		return repo.findAll();
 	}
-	
+
 	@Override
 	public Shop getOne(Long id) {
-		Shop shop;
+		Shop shop = null;
 
-		Optional<Shop> optShop= repo.findById(id);
+		Optional<Shop> optShop = repo.findById(id);
 		if (optShop.isPresent()) {
 			shop = repo.findById(id).get();
-		}else {
-			shop = new Shop();
-		}		
+		}
+
 		return shop;
 	}
-	
+
 	@Override
 	public void createShop(Shop newShop) {
 		repo.save(newShop);
@@ -44,20 +43,16 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public void updateShop(Long id, Shop newShop) {
-		if(repo.existsById(id)) {
-			repo.findById(id).ifPresent( shop -> {
-				shop.setAddress(newShop.getAddress());
-				shop.setName(newShop.getName());
-				shop.setImage(newShop.getImage());
-				repo.save(shop);
-			});
-		}
+		repo.findById(id).ifPresent(shop -> {
+			shop.setAddress(newShop.getAddress());
+			shop.setName(newShop.getName());
+			shop.setImage(newShop.getImage());
+			repo.save(shop);
+		});
 	}
 
 	@Override
 	public void deleteShop(Long id) {
-		repo.findById(id).ifPresent(shop -> {
-			repo.deleteById(id);
-		});		
+		repo.findById(id).ifPresent(shop -> repo.deleteById(id));
 	}
 }
