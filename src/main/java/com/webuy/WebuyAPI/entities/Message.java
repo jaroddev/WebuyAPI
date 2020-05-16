@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Chat implements Serializable {
+public class Message implements Serializable {
 	
 	private static final long serialVersionUID = 289007841462112538L;
 
