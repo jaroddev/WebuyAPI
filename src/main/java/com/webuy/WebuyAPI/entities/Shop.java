@@ -25,6 +25,9 @@ public class Shop implements Serializable {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private ShopGroup group;
+	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "shopId")
 	private List<Product> products = new ArrayList<>();
@@ -77,8 +80,9 @@ public class Shop implements Serializable {
 		products.add(product);
     }
  
-    public void removeProduct(Product product) {
-    	products.remove(product);
+    public void removeProduct(Long productId) {
+    	for(Product product : products)
+    		if(product.getId().equals(productId)) products.remove(product);
     }
 	
 }

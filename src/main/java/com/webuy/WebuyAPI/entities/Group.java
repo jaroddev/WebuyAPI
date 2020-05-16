@@ -32,6 +32,7 @@ public class Group implements Serializable {
 	private Collection<User> members;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	//group id
 	@JoinColumn(name = "messageId")
 	private Collection<GroupMessage> messages;
 	
