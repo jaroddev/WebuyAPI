@@ -26,6 +26,33 @@ public class Shop implements Serializable {
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
+	private ImagesPointer images;
+	
+	public ImagesPointer getImages() {
+		return images;
+	}
+
+	public void setImages(ImagesPointer images) {
+		this.images = images;
+	}
+
+	public ShopGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(ShopGroup group) {
+		this.group = group;
+	}
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
+
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private ShopGroup group;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
@@ -85,4 +112,21 @@ public class Shop implements Serializable {
     		if(product.getId().equals(productId)) products.remove(product);
     }
 	
+    public void addImage(Image image ) {
+		if(this.images.getImages().size() <= 3)
+			this.images.getImages().add(image);		
+    }
+    
+    public void updateImage(Long oldImageID, Image image ) {
+		if(this.images.getImages().size() <= 3)
+		{
+			for(Image oldImage : this.images.getImages())
+				if(oldImage.getId().equals(oldImageID))
+				{
+					this.images.getImages().remove(oldImageID);
+					this.images.getImages().add(image);
+				}
+		}
+			
+    }
 }
