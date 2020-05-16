@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import javassist.expr.NewArray;
+
 @Entity
 public class User implements Serializable {
 	@Id
@@ -34,10 +36,23 @@ public class User implements Serializable {
 	private Collection<User> friends;
 	
 	@OneToMany
-	private Collection<User> sentInvitation;
+	private Collection<FriendRequest> sentFriendRequests;
 	
 	@OneToMany
-	private Collection<User> receivedInvitation;
+	private Collection<FriendRequest> receivedFriendRequests;
+	
+	@OneToMany
+	private Collection<Group> groups;
+	
+	@OneToMany
+	private Collection<Group> groupsCreate;
+	
+	@OneToMany
+	private Collection<GroupInvitation> sentGroupInvitations;
+	
+	@OneToMany
+	private Collection<GroupInvitation> receivedGroupInvitations;
+	
 	
 	public Long getId() {
 		return id;
@@ -103,20 +118,69 @@ public class User implements Serializable {
 		this.friends = friends;
 	}
 	
-	public Collection<User> getSentInvitation() {
-		return sentInvitation;
+	public void addFriends(User friend) {
+		this.friends.add(friend);
+		friend.addFriends(this);
+	}
+
+
+	public Collection<FriendRequest> getSentFriendRequests() {
+		return sentFriendRequests;
 	}
 	
-	public void setSentInvitation(Collection<User> sentInvitatio) {
-		this.sentInvitation = sentInvitatio;
+	
+
+	public void setSentFriendRequest(User friend) {
+		FriendRequest friendRequest = new FriendRequest();
+		friendRequest.setSender(this);
+		friendRequest.setReceiver(friend);
+		this.sentFriendRequests.add(friendRequest);
 	}
 	
-	public Collection<User> getReceivedInvitation() {
-		return this.receivedInvitation;
+	
+
+	public Collection<FriendRequest> getReceivedFriendRequests() {
+		return receivedFriendRequests;
+	}
+
+	public void removeReceivedFriendRequest(Long receivedFriendRequestId) {
+		for(FriendRequest friendRequest : this.receivedFriendRequests)
+			if(friendRequest.getId().equals(receivedFriendRequestId))
+				this.receivedFriendRequests.remove(friendRequest);
+	}
+
+	public Collection<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Collection<Group> groups) {
+		this.groups = groups;
+	}
+
+	public Collection<Group> getGroupsCreate() {
+		return groupsCreate;
+	}
+
+	public void setGroupsCreate(Collection<Group> groupsCreate) {
+		this.groupsCreate = groupsCreate;
+	}
+
+	public Collection<GroupInvitation> getSentGroupInvitations() {
+		return sentGroupInvitations;
+	}
+
+	public void setSentGroupInvitations(Collection<GroupInvitation> sentGroupInvitations) {
+		this.sentGroupInvitations = sentGroupInvitations;
+	}
+
+	public Collection<GroupInvitation> getReceivedGroupInvitations() {
+		return receivedGroupInvitations;
+	}
+
+	public void setReceivedGroupInvitations(Collection<GroupInvitation> receivedGroupInvitations) {
+		this.receivedGroupInvitations = receivedGroupInvitations;
 	}
 	
-	public void setReceivedInvitation(Collection<User> receivedInvitation) {
-		this.receivedInvitation = receivedInvitation;
-	}
+	
 	
 }
