@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ShopGroup implements Serializable {
@@ -13,31 +14,32 @@ public class ShopGroup implements Serializable {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	private String urlLogo;
-	private String alternativeTextLogo;
-	
+
+	@OneToOne
+	private Image logo;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUrlLogo() {
-		return urlLogo;
+
+	public Image getLogo() {
+		return logo;
 	}
-	public void setUrlLogo(String urlLogo) {
-		this.urlLogo = urlLogo;
+
+	public void setLogo(Image logo) {
+		this.logo = logo;
 	}
-	public String getAlternativeTextLogo() {
-		return alternativeTextLogo;
-	}
-	public void setAlternativeTextLogo(String alternativeTextLogo) {
-		this.alternativeTextLogo = alternativeTextLogo;
-	}
+
 }

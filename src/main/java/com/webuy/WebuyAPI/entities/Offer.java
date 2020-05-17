@@ -3,9 +3,10 @@ package com.webuy.WebuyAPI.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 
 @Entity
@@ -15,19 +16,17 @@ public class Offer implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private int minMemberCount;
-
-	private int maxMemberCount;
-
+	@Column(name = "start_date")
 	private Date start;
 
+	@Column(name = "end_date")
 	private Date end;
 
 	private double discountPrice;
 
-	private int stock;
+	private int discountQuantity;
 
-	@OneToOne
+	@ManyToOne
 	private Product product;
 
 	public Long getId() {
@@ -36,22 +35,6 @@ public class Offer implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public int getMinMemberCount() {
-		return minMemberCount;
-	}
-
-	public void setMinMemberCount(int minMemberCount) {
-		this.minMemberCount = minMemberCount;
-	}
-
-	public int getMaxMemberCount() {
-		return maxMemberCount;
-	}
-
-	public void setMaxMemberCount(int maxMemberCount) {
-		this.maxMemberCount = maxMemberCount;
 	}
 
 	public Date getStart() {
@@ -78,12 +61,12 @@ public class Offer implements Serializable {
 		this.discountPrice = discountPrice;
 	}
 
-	public int getStock() {
-		return stock;
+	public int getDiscountQuantity() {
+		return discountQuantity;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setDiscountQuantity(int discountQuantity) {
+		this.discountQuantity = discountQuantity;
 	}
 
 	public Product getProduct() {

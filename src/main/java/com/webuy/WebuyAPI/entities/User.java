@@ -11,14 +11,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import javassist.expr.NewArray;
-
 @Entity
 public class User implements Serializable {
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	// For authentication
 	private String email;
 	private String phoneNumber;
@@ -26,34 +25,33 @@ public class User implements Serializable {
 	private String role;
 
 	// Shop recommendation
-	@OneToOne(cascade= CascadeType.PERSIST)
-	private GPSLocationPointer location;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private GPSLocationPointer gpsLocationPointer;
 
 	// Define the user to other user
 	private String name;
-	
+
 	@ManyToMany
 	private Collection<User> friends;
-	
+
 	@OneToMany
 	private Collection<FriendRequest> sentFriendRequests;
-	
+
 	@OneToMany
 	private Collection<FriendRequest> receivedFriendRequests;
-	
-	@OneToMany
+
+	@ManyToMany
 	private Collection<Group> groups;
-	
+
 	@OneToMany
 	private Collection<Group> groupsCreate;
-	
+
 	@OneToMany
 	private Collection<GroupInvitation> sentGroupInvitations;
-	
+
 	@OneToMany
 	private Collection<GroupInvitation> receivedGroupInvitations;
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -94,20 +92,20 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
-	public GPSLocationPointer getLocation() {
-		return location;
+	public GPSLocationPointer getGPSLocationPointer() {
+		return gpsLocationPointer;
 	}
 
-	public void setLocation(GPSLocationPointer location) {
-		this.location = location;
+	public void setGPSLocationPointer(GPSLocationPointer gpsLocationPointer) {
+		this.gpsLocationPointer = gpsLocationPointer;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
-		this.name = name ;
+		this.name = name;
 	}
 
 	public Collection<User> getFriends() {
@@ -117,35 +115,51 @@ public class User implements Serializable {
 	public void setFriends(Collection<User> friends) {
 		this.friends = friends;
 	}
-	
+
 	public void addFriends(User friend) {
 		this.friends.add(friend);
 		friend.addFriends(this);
 	}
 
-
 	public Collection<FriendRequest> getSentFriendRequests() {
 		return sentFriendRequests;
 	}
-	
-	
 
-	public void setSentFriendRequest(User friend) {
+	public void setSentFriendRequests(Collection<FriendRequest> sentFriendRequests) {
+		this.sentFriendRequests = sentFriendRequests;
+	}
+
+	public void addSentFriendRequest(User friend) {
 		FriendRequest friendRequest = new FriendRequest();
 		friendRequest.setSender(this);
 		friendRequest.setReceiver(friend);
 		this.sentFriendRequests.add(friendRequest);
 	}
-	
-	
+
+	public void removeSentFriendRequest(Long sentFriendRequestId) {
+		for (FriendRequest friendRequest : this.sentFriendRequests)
+			if (friendRequest.getId().equals(sentFriendRequestId))
+				this.sentFriendRequests.remove(friendRequest);
+	}
 
 	public Collection<FriendRequest> getReceivedFriendRequests() {
 		return receivedFriendRequests;
 	}
 
+	public void setReceivedFriendRequests(Collection<FriendRequest> receivedFriendRequests) {
+		this.receivedFriendRequests = receivedFriendRequests;
+	}
+
+	public void addReceivedFriendRequest(User friend) {
+		FriendRequest friendRequest = new FriendRequest();
+		friendRequest.setSender(friend);
+		friendRequest.setReceiver(this);
+		this.sentFriendRequests.add(friendRequest);
+	}
+
 	public void removeReceivedFriendRequest(Long receivedFriendRequestId) {
-		for(FriendRequest friendRequest : this.receivedFriendRequests)
-			if(friendRequest.getId().equals(receivedFriendRequestId))
+		for (FriendRequest friendRequest : this.receivedFriendRequests)
+			if (friendRequest.getId().equals(receivedFriendRequestId))
 				this.receivedFriendRequests.remove(friendRequest);
 	}
 
@@ -180,7 +194,5 @@ public class User implements Serializable {
 	public void setReceivedGroupInvitations(Collection<GroupInvitation> receivedGroupInvitations) {
 		this.receivedGroupInvitations = receivedGroupInvitations;
 	}
-	
-	
-	
+
 }

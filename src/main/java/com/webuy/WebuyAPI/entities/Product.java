@@ -7,16 +7,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Product implements Serializable {
+
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String name;
 	private double price;
 	private int stock;
-	
+
+	@OneToOne
+	private Image logo;
+
 	public Long getId() {
 		return id;
 	}
@@ -47,6 +52,14 @@ public class Product implements Serializable {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public Image getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Image logo) {
+		this.logo = logo;
 	}
 
 }

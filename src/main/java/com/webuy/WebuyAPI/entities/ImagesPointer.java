@@ -16,10 +16,10 @@ public class ImagesPointer implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pointer_id")
-	private List<Image> images= new ArrayList<>();
+	private List<Image> images = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -36,13 +36,15 @@ public class ImagesPointer implements Serializable {
 	public void setImages(List<Image> images) {
 		this.images = images;
 	}
+
 	public void addImage(Image image) {
 		this.images.add(image);
 	}
-	
+
 	public void removeImage(Long imageId) {
-    	for(Image image : this.images)
-    		if(image.getId().equals(imageId)) this.images.remove(image);
-    }
+		for (Image image : this.images)
+			if (image.getId().equals(imageId))
+				this.images.remove(image);
+	}
 
 }

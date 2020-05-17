@@ -45,8 +45,10 @@ public class ShopServiceImpl implements ShopService {
 	public void updateShop(Long id, Shop newShop) {
 		repo.findById(id).ifPresent(shop -> {
 			shop.setAddress(newShop.getAddress());
-			shop.setName(newShop.getName());
-			shop.setImage(newShop.getImage());
+			shop.setImages(newShop.getImages());
+			shop.setShopGroup(newShop.getShopGroup());
+			shop.setProducts(newShop.getProducts());
+			shop.setOffers(newShop.getOffers());
 			repo.save(shop);
 		});
 	}

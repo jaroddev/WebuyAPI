@@ -1,8 +1,7 @@
 package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,92 +13,93 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Shop implements Serializable {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private ImagesPointer images;
 
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private ShopGroup shopGroup;
+
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "shopId")
+	private Collection<Product> products;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "shopId")
+	private Collection<Offer> offers;
+
 	public ImagesPointer getImages() {
 		return images;
 	}
-	
+
 	public void setImages(ImagesPointer images) {
 		this.images = images;
 	}
-	
-	public ShopGroup getGroup() {
-		return group;
+
+	public ShopGroup getShopGroup() {
+		return shopGroup;
 	}
 
-	public void setGroup(ShopGroup group) {
-		this.group = group;
+	public void setShopGroup(ShopGroup shopGroup) {
+		this.shopGroup = shopGroup;
 	}
 
-	public List<Offer> getOffers() {
+	public Collection<Offer> getOffers() {
 		return offers;
 	}
 
-	public void setOffers(List<Offer> offers) {
+	public void setOffers(Collection<Offer> offers) {
 		this.offers = offers;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	private ShopGroup group;
-	
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "shopId")
-	private List<Product> products = new ArrayList<>();
-	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "shopId")
-	private List<Offer> offers = new ArrayList<>();
-	
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Address getAddress() {
 		return address;
 	}
-	
+
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	public List<Product> getProducts() {
+
+	public Collection<Product> getProducts() {
 		return products;
 	}
-	
-	public void setProducts(List<Product> products) {
+
+	public void setProducts(Collection<Product> products) {
 		this.products = products;
-	}	
-	
+	}
+
 	public void addProduct(Product product) {
 		products.add(product);
-    }
-	
-    public void removeProduct(Long productId) {
-    	for(Product product : products)
-    		if(product.getId().equals(productId)) products.remove(product);
-    }
-    
-    public void addImage(Image image ) {
-		if(this.images.getImages().size() <= 3)
-			this.images.getImages().add(image);		
-    }
-    
-    public void removeImage(Long imageId) {
-    	this.images.removeImage(imageId);
-    }
-    
+	}
+
+	public void removeProduct(Long productId) {
+		for (Product product : products)
+			if (product.getId().equals(productId))
+				products.remove(product);
+	}
+
+	public void addImage(Image image) {
+		if (this.images.getImages().size() <= 3)
+			this.images.getImages().add(image);
+	}
+
+	public void removeImage(Long imageId) {
+		this.images.removeImage(imageId);
+	}
+
 }

@@ -37,10 +37,8 @@ public class OfferServiceImpl implements OfferService {
 		repo.findById(id).ifPresent(offer -> {
 			offer.setDiscountPrice(newOffer.getDiscountPrice());
 			offer.setEnd(newOffer.getEnd());
-			offer.setMaxMemberCount(newOffer.getMaxMemberCount());
-			offer.setMinMemberCount(newOffer.getMinMemberCount());
 			offer.setStart(newOffer.getStart());
-			offer.setStock(newOffer.getStock());
+			offer.setDiscountQuantity(newOffer.getDiscountQuantity());
 
 			repo.save(offer);
 		});

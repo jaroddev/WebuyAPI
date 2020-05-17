@@ -11,19 +11,19 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Message implements Serializable {
-	
+
 	private static final long serialVersionUID = 289007841462112538L;
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@ManyToOne
 	private User creator;
 
 	private Date createdAt;
 
-	@Size(max=516)
+	@Size(max = 516)
 	private String message;
 
 	public Long getId() {
@@ -49,6 +49,13 @@ public class Message implements Serializable {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	
-	
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }

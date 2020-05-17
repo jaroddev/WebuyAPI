@@ -9,18 +9,17 @@ import javax.persistence.GeneratedValue;
 
 @Entity
 public class FriendRequest implements Serializable {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@OneToOne
 	private User sender;
-	
+
 	@OneToOne
 	private User receiver;
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -45,5 +44,4 @@ public class FriendRequest implements Serializable {
 		this.receiver = receiver;
 	}
 
-		
 }
