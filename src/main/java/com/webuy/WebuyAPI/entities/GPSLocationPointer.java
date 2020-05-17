@@ -1,12 +1,15 @@
 package com.webuy.WebuyAPI.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToOne;
 
 @Entity
-public class GPSLocationPointer {
+public class GPSLocationPointer implements Serializable {
+	
 	@Id
 	@GeneratedValue
 	private Long id;
