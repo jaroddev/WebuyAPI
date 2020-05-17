@@ -18,22 +18,22 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	@GetMapping("/product/{id}")
+	@GetMapping("/user/{id}")
 	public void getUser(@PathVariable Long id) {
 		this.userService.getOne(id);
 	}
 	
-	@PostMapping("/product")
+	@PostMapping("/user")
 	public void addShop(@RequestBody User product) {
 		this.userService.createUser(product);
 	}
 	
-	@PutMapping("/product/{id}")
+	@PutMapping("/user/{id}")
 	public void editShop(@PathVariable Long id, @RequestBody User product) {
 		this.userService.updateUser(id, product);
 	}
 	
-	@DeleteMapping("/product/{id}")
+	@DeleteMapping("/user/{id}")
 	public void deleteShop(@PathVariable Long id) {
 		this.userService.deleteUser(id);
 	}	
