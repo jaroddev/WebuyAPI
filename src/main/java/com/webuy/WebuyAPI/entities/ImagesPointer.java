@@ -40,7 +40,7 @@ public class ImagesPointer implements Serializable {
 		this.images.add(image);
 	}
 	
-	public void removeProduct(Long imageId) {
+	public void removeImage(Long imageId) {
     	for(Image image : this.images)
     		if(image.getId().equals(imageId)) this.images.remove(image);
     }
