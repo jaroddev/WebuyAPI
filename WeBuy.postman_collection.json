@@ -229,7 +229,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8080/shop/1",
+									"raw": "http://localhost:8080/shop/30",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -237,7 +237,7 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"1"
+										"30"
 									]
 								}
 							},
@@ -261,7 +261,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"Toulouse\",\n\t\t\"postalCode\": \"31000\",\n\t\t\"department\": \"31\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/Toulouse\",\n\t\"name\": \"4th Magasin Postman\"\n}"
+									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"La riche\",\n\t\t\"postalCode\": \"37520\",\n\t\t\"department\": \"37\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/geant\",\n\t\"name\": \"Geant\"\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8080/shop",
@@ -290,7 +290,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"Lyon\",\n\t\t\"postalCode\": \"69000\",\n\t\t\"department\": \"69\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/Auchan\",\n\t\"name\": \"Auchan\"\n}",
+									"raw": "{\n    \"name\": \"Auchan\",\n    \"image\": \"http:www.fakeimage.com/auchan\",\n    \"address\": {\n        \"id\": 17,\n        \"city\": \"Angers\",\n        \"postalCode\": \"49000\",\n        \"department\": \"49\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -298,7 +298,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/shop/18",
+									"raw": "http://localhost:8080/shop/14",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -306,7 +306,7 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"18"
+										"14"
 									]
 								}
 							},
@@ -318,7 +318,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shop/3",
+									"raw": "http://localhost:8080/shop/28",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -326,7 +326,134 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"3"
+										"28"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get a user",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/user/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a user",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@Popo.pasdenomd\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"huhu hihi haha\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Popo Pasdenom\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": {\r\n    \t\"location\": {\r\n    \t\t\"latitude\": 32.5165166,\r\n    \t\t\"longitude\": 23.1561313\r\n    \t}\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a user",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@nathalie.lignot\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"BigBen\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Nathalie Lignot\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"1"
 									]
 								}
 							},
