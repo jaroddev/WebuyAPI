@@ -2,6 +2,7 @@ package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ public class GPSLocationPointer implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@OneToOne
+	@OneToOne(cascade= {CascadeType.PERSIST,CascadeType.REMOVE})
 	private Location location;
 
 	public Long getId() {
