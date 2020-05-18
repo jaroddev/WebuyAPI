@@ -2,11 +2,10 @@ package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -19,8 +18,8 @@ public class Product implements Serializable {
 	private double price;
 	private int stock;
 
-	@OneToOne
-	private Image logo;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private ImagesPointer images;
 
 	public Long getId() {
 		return id;
@@ -54,12 +53,20 @@ public class Product implements Serializable {
 		this.stock = stock;
 	}
 
-	public Image getLogo() {
-		return logo;
+	public ImagesPointer getImages() {
+		return images;
 	}
 
-	public void setLogo(Image logo) {
-		this.logo = logo;
+	public void setImages(ImagesPointer images) {
+		this.images = images;
+	}
+
+	public void addImage(Image image) {
+		this.images.addImage(image);
+	}
+
+	public void removeImage(Long imageId) {
+		this.images.removeImage(imageId);
 	}
 
 }
