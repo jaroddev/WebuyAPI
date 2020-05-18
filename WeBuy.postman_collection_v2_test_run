@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "c13688ca-cc9d-a2aa-bcf2-d5c32c2ce12c",
+		"name": "WeBuy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Shop Service",
+			"item": [
+				{
+					"name": "Get Shop's Promotion Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/2/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"2",
+								"groups"
+							]
+						},
+						"description": "Get all the offers group in a shop, you got the shop, you want to participate to a group.\nSo you want a list of existing groups."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shop's Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shop/2/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"2",
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Promotion Group Service",
+			"item": [
+				{
+					"name": "Get a group and its details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/groups/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"groups",
+								"2"
+							]
+						},
+						"description": "Récupère le produit, avec les membres et d'autre info de groupe."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/groups/2/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"groups",
+								"2",
+								"messages"
+							]
+						},
+						"description": "Get all the messages sent to in a promotion group"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "GET friend requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/2/requests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"2",
+								"requests"
+							]
+						},
+						"description": "Get friend requests sent to a user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Invitation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/2/invitations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"2",
+								"invitations"
+							]
+						},
+						"description": "Get invitations sent to a user"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "Log a user in"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Log a user out"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "Shop",
+					"item": [
+						{
+							"name": "Get Shop List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/testShops",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"testShops"
+									]
+								},
+								"description": "Récupére les magasins, **___pagination___** disponible."
+							},
+							"response": []
+						},
+						{
+							"name": "Get a shop",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/testShops/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"testShops",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a shop",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\r\n\t\"address\": {\r\n            \r\n            \"city\": \"Tours\",\r\n            \"postalCode\": \"37000\",\r\n            \"department\": \"37\",\r\n            \"country\": null,\r\n            \"gpslocationPointer\": null\r\n        },\r\n        \"images\": {\r\n        \t\"images\": [\r\n        \t\t\t{\r\n        \t\t\t\t\"urlImage\":\"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_1.jpg\",\r\n        \t\t\t\t\"alternativeText\": \"carrefour_city_tours_grammont_1\"\r\n        \t\t\t},\r\n        \t\t\t{\r\n        \t\t\t\t\"urlImage\":\"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_2.jpg\",\r\n        \t\t\t\t\"alternativeText\": \"carrefour_city_tours_grammont_2\"\r\n        \t\t\t}\r\n        \t\t]\r\n        },\r\n        \"shopGroup\": null,\r\n        \"products\": [],\r\n        \"offers\": []\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/testShops",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"testShops"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a shop",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"address\": {\n        \"id\": 2,\n        \"city\": \"Tours centre update avec ID\",\n        \"postalCode\": \"37000\",\n        \"department\": \"37\",\n        \"country\": null,\n        \"gpslocationPointer\": null\n    },\n    \"images\": {\n        \"id\": 3,\n        \"images\": [\n            {\n                \"id\": 4,\n                \"urlImage\": \"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_1.jpg\",\n                \"alternativeText\": \"carrefour_city_tours_grammont_1\"\n            },\n            {\n                \"id\": 5,\n                \"urlImage\": \"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_2.jpg\",\n                \"alternativeText\": \"carrefour_city_tours_grammont_2\"\n            }\n        ]\n    },\n    \"shopGroup\": null,\n    \"products\": [],\n    \"offers\": []\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/testShops/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"testShops",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a shop",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/shop/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shop",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get a user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/user/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@Popo.pasdenomd\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"huhu hihi haha\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Popo Pasdenom\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": {\r\n    \t\"location\": {\r\n    \t\t\"latitude\": 32.5165166,\r\n    \t\t\"longitude\": 23.1561313\r\n    \t}\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a user",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@nathalie.lignot\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"BigBen\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Nathalie Lignot\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": null\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Get Product List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"product"
+									]
+								},
+								"description": "Récupére les magasins, **___pagination___** disponible."
+							},
+							"response": []
+						},
+						{
+							"name": "Create a product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Produit Postman\",\n\t\"stock\": 25\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a product",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/product/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"product",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

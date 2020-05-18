@@ -18,10 +18,10 @@ public class Shop implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address address;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private ImagesPointer images;
 
 	@OneToOne(cascade = CascadeType.PERSIST)

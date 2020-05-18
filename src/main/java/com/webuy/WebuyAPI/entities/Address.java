@@ -2,8 +2,10 @@ package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToOne;
 
@@ -17,16 +19,16 @@ public class Address implements Serializable {
 	private String department;
 	private String country;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private GPSLocationPointer gpsLocationPointer;
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/*public void setId(Long id) {
 		this.id = id;
-	}
+	}*/
 
 	public String getCity() {
 		return city;

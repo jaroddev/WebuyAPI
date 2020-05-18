@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webuy.WebuyAPI.dao.AddressJPARepository;
+import com.webuy.WebuyAPI.dao.ImagesPointerJPARepository;
 import com.webuy.WebuyAPI.dao.ShopJPARepository;
+import com.webuy.WebuyAPI.entities.ImagesPointer;
 import com.webuy.WebuyAPI.entities.Shop;
 
 @Service
@@ -15,6 +17,8 @@ public class ShopServiceImpl implements ShopService {
 
 	@Autowired
 	ShopJPARepository repo;
+	@Autowired
+	ImagesPointerJPARepository imagesRepo;
 
 	@Autowired
 	AddressJPARepository addressRepo;
@@ -55,6 +59,10 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public void deleteShop(Long id) {
+		//Long imagesId = getOne(id).getImages().getId();
+		//imagesRepo.findById(imagesId).ifPresent(images -> imagesRepo.deleteById(imagesId));
+		//imagesRepo.delete(getOne(id).getImages());
 		repo.findById(id).ifPresent(shop -> repo.deleteById(id));
+		
 	}
 }

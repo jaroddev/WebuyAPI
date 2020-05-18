@@ -17,7 +17,7 @@ public class ImagesPointer implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "pointer_id")
 	private List<Image> images = new ArrayList<>();
 
@@ -25,9 +25,9 @@ public class ImagesPointer implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	/*public void setId(Long id) {
+	this.id = id;
+}*/
 
 	public List<Image> getImages() {
 		return images;
