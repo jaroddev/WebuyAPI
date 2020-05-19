@@ -1,6 +1,7 @@
 package com.webuy.WebuyAPI.web;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,42 +12,62 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// import com.webuy.WebuyAPI.entities.Group;
+import com.webuy.WebuyAPI.dao.ShopJPARepository;
+
 import com.webuy.WebuyAPI.entities.Shop;
-import com.webuy.WebuyAPI.services.ShopServiceImpl;
+
 
 @RestController
 public class ShopController {
 	
 	@Autowired
-	private ShopServiceImpl shopService;
+	ShopJPARepository shopJpaRepository;
+	
+	@GetMapping("/shops")
+	public Collection<Shop> findAllShop(){
+		return this.shopJpaRepository.findAll();
+	}
+	
+	
+	@GetMapping("/shops/{id}")
+	public Shop findShopById(@PathVariable Long id){
+		Shop shop = null;
 
-	@GetMapping("/shop")
-	public Collection<Shop> getShopList(){
-		return this.shopService.getAll();
+		Optional<Shop> optShop = shopJpaRepository.findById(id);
+		if (optShop.isPresent()) {
+			shop = shopJpaRepository.findById(id).get();
+		}
+
+		return shop;
 	}
 	
-	@GetMapping("/shop/{id}")
-	public Shop getShop(@PathVariable Long id){
-		return this.shopService.getOne(id);
+	
+	@DeleteMapping("/shops/{id}")
+	public void deleteShopById(@PathVariable Long id) {
+		this.shopJpaRepository.deleteById(id);
 	}
 	
-	@PostMapping("/shop")
-	public void addShop(@RequestBody Shop shop) {
-		this.shopService.createShop(shop);
+	
+	
+	@PostMapping("/shops")
+	public void createShop(@RequestBody Shop shop) {
+		this.shopJpaRepository.save(shop);
 	}
 	
-	@PutMapping("/shop/{id}")
-	public void editShop(@PathVariable Long id, @RequestBody Shop shop) {
-		this.shopService.updateShop(id, shop);
+	@PutMapping("/shops/{id}")
+	public void updateShopById(@PathVariable Long id, @RequestBody Shop newShop) {
+		Shop oldShop = findShopById(id);
+		if(oldShop.getId().equals(newShop.getId()))
+			this.shopJpaRepository.save(newShop);
+		
 	}
 	
-	@DeleteMapping("/shop/{id}")
-	public void deleteShop(@PathVariable Long id) {
-		this.shopService.deleteShop(id);
+	@PutMapping("/shops")
+	public void updateShop(@RequestBody Shop shop) {
+		this.shopJpaRepository.save(shop);
 	}
 	
-	@GetMapping("/shop/{id}/groups")
+	@GetMapping("/shops/{id}/groups")
 	public boolean getGroupList(@PathVariable Long id) {
 		//this.shopService.getOne(id).get
 		//Collection<Group>
@@ -54,7 +75,7 @@ public class ShopController {
 		return true;
 	}	
 	
-	@GetMapping("/shop/{id}/products")
+	@GetMapping("/shops/{id}/products")
 	public boolean getProductList(@PathVariable Long id) {
 		// use the shop Repository
 		// true return type is List<Product>

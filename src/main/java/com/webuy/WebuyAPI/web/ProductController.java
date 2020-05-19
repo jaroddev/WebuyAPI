@@ -1,6 +1,7 @@
 package com.webuy.WebuyAPI.web;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,33 +12,55 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webuy.WebuyAPI.dao.ProductJPARepository;
 import com.webuy.WebuyAPI.entities.Product;
-import com.webuy.WebuyAPI.services.ProductServiceImpl;
 
 @RestController
 public class ProductController {
 	
 	@Autowired
-	private ProductServiceImpl productService;
+	private ProductJPARepository productJpaRepository;
 
-	@GetMapping("/product")
-	public Collection<Product> getShopList(){
-		return this.productService.getAll();
+	@GetMapping("/products")
+	public Collection<Product> findAllProduct(){
+		return this.productJpaRepository.findAll();
 	}
 	
-	@PostMapping("/product")
-	public void addShop(@RequestBody Product product) {
-		this.productService.createProduct(product);
+	@GetMapping("products/{id}")
+	public Product findProductById(Long id)
+	{
+		Product product = null;
+
+		Optional<Product> productOptional = productJpaRepository.findById(id);
+		if (productOptional.isPresent()) {
+			product = productJpaRepository.findById(id).get();
+		}
+
+		return product;
 	}
 	
-	@PutMapping("/product")
-	public void editShop(@PathVariable Long id, @RequestBody Product product) {
-		this.productService.updateProduct(id, product);
+	@PostMapping("/products")
+	public void createProduct(@RequestBody Product product) {
+		this.productJpaRepository.save(product);
 	}
 	
-	@DeleteMapping("/product")
+	@PutMapping("/products/{id}")
+	public void updateProduct(@PathVariable Long id, @RequestBody Product newProduct) 
+	{
+		Product oldProduct = findProductById(id);
+		if(oldProduct.getId().equals(newProduct.getId()))
+				this.productJpaRepository.save(newProduct);
+	}
+	
+	@PutMapping("/products")
+	public void updateProduct(@RequestBody Product newProduct) 
+	{
+			this.productJpaRepository.save(newProduct);
+	}
+	
+	@DeleteMapping("/products/{id}")
 	public void deleteShop(@PathVariable Long id) {
-		this.productService.deleteProduct(id);
+		this.productJpaRepository.deleteById(id);
 	}
 	
 }
