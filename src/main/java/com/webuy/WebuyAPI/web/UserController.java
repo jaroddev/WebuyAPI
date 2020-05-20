@@ -1,5 +1,8 @@
 package com.webuy.WebuyAPI.web;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,35 +12,58 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.webuy.WebuyAPI.entities.Shop;
+import com.webuy.WebuyAPI.dao.UserJPARepository;
 import com.webuy.WebuyAPI.entities.User;
-import com.webuy.WebuyAPI.services.UserServiceImpl;
+
+
+
 
 @RestController
 public class UserController {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserJPARepository userJpaRepository;
 
-	
-	@GetMapping("/user/{id}")
-	public User getUser(@PathVariable Long id){
-		return this.userService.getOne(id);
-	}	
-		
-	@PostMapping("/user")
-	public void addShop(@RequestBody User product) {
-		this.userService.createUser(product);
+	@GetMapping("/users")
+	public Collection<User> getAllUsers(){
+		return this.userJpaRepository.findAll();
 	}
 	
-	@PutMapping("/user/{id}")
-	public void editShop(@PathVariable Long id, @RequestBody User product) {
-		this.userService.updateUser(id, product);
+	@GetMapping("users/{id}")
+	public User getUserById(Long id)
+	{
+		User user = null;
+
+		Optional<User> userOptional = userJpaRepository.findById(id);
+		if (userOptional.isPresent()) {
+			user = userJpaRepository.findById(id).get();
+		}
+
+		return user;
 	}
 	
-	@DeleteMapping("/user/{id}")
+	@PostMapping("/users")
+	public void createUser(@RequestBody User user) {
+		this.userJpaRepository.save(user);
+	}
+	
+	@PutMapping("/users/{id}")
+	public void updateUser(@PathVariable Long id, @RequestBody User newUser) 
+	{
+		User oldUser = getUserById(id);
+		if(oldUser.getId().equals(newUser.getId()))
+				this.userJpaRepository.save(newUser);
+	}
+	
+	@PutMapping("/users")
+	public void updateUser(@RequestBody User newUser) 
+	{
+			this.userJpaRepository.save(newUser);
+	}
+	
+	@DeleteMapping("/users/{id}")
 	public void deleteShop(@PathVariable Long id) {
-		this.userService.deleteUser(id);
-	}	
+		this.userJpaRepository.deleteById(id);
+	}
 	
 }

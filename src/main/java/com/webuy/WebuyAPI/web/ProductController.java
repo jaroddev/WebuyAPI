@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webuy.WebuyAPI.dao.ProductJPARepository;
 import com.webuy.WebuyAPI.entities.Product;
 
+
 @RestController
 public class ProductController {
 	
@@ -22,12 +23,12 @@ public class ProductController {
 	private ProductJPARepository productJpaRepository;
 
 	@GetMapping("/products")
-	public Collection<Product> findAllProduct(){
+	public Collection<Product> getAllProducts(){
 		return this.productJpaRepository.findAll();
 	}
 	
 	@GetMapping("products/{id}")
-	public Product findProductById(Long id)
+	public Product getProductById(Long id)
 	{
 		Product product = null;
 
@@ -47,7 +48,7 @@ public class ProductController {
 	@PutMapping("/products/{id}")
 	public void updateProduct(@PathVariable Long id, @RequestBody Product newProduct) 
 	{
-		Product oldProduct = findProductById(id);
+		Product oldProduct = getProductById(id);
 		if(oldProduct.getId().equals(newProduct.getId()))
 				this.productJpaRepository.save(newProduct);
 	}

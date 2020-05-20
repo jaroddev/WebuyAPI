@@ -1,6 +1,7 @@
 package com.webuy.WebuyAPI.web;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,38 +12,54 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webuy.WebuyAPI.dao.OfferJPARepository;
 import com.webuy.WebuyAPI.entities.Offer;
-import com.webuy.WebuyAPI.services.OfferServiceImpl;
 
 @RestController
 public class OfferController {
 
 	@Autowired
-	private OfferServiceImpl offerService;
+	private OfferJPARepository offerJpaRepository;
 
-	@GetMapping("/offer")
-	public Collection<Offer> getOfferList(){
-		return this.offerService.getAll();
+	@GetMapping("/offers")
+	public Collection<Offer> getAllOffers(){
+		return this.offerJpaRepository.findAll();
 	}
 	
-	@GetMapping("/offer/{id}")
-	public Offer getOffer(@PathVariable Long id){
-		return this.offerService.getOne(id);
+	@GetMapping("offers/{id}")
+	public Offer getOfferById(Long id)
+	{
+		Offer offer = null;
+
+		Optional<Offer> offerOptional = offerJpaRepository.findById(id);
+		if (offerOptional.isPresent()) {
+			offer = offerJpaRepository.findById(id).get();
+		}
+
+		return offer;
 	}
 	
-	@PostMapping("/offer")
-	public void addOffer(@RequestBody Offer offer) {
-		this.offerService.createOffer(offer);
+	@PostMapping("/offers")
+	public void createOffer(@RequestBody Offer offer) {
+		this.offerJpaRepository.save(offer);
 	}
 	
-	@PutMapping("/offer/{id}")
-	public void editOffer(@PathVariable Long id, @RequestBody Offer offer) {
-		this.offerService.updateOffer(id, offer);
+	@PutMapping("/offers/{id}")
+	public void updateOffer(@PathVariable Long id, @RequestBody Offer newOffer) 
+	{
+		Offer oldOffer = getOfferById(id);
+		if(oldOffer.getId().equals(newOffer.getId()))
+				this.offerJpaRepository.save(newOffer);
 	}
 	
-	@DeleteMapping("/offer/{id}")
-	public void deleteOffer(@PathVariable Long id) {
-		this.offerService.deleteOffer(id);
-	}	
+	@PutMapping("/offers")
+	public void updateOffer(@RequestBody Offer newOffer) 
+	{
+			this.offerJpaRepository.save(newOffer);
+	}
 	
+	@DeleteMapping("/offers/{id}")
+	public void deleteShop(@PathVariable Long id) {
+		this.offerJpaRepository.deleteById(id);
+	}
 }

@@ -18,7 +18,7 @@ public class Product implements Serializable {
 	private double price;
 	private int stock;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private ImagesPointer images;
 
 	public Long getId() {

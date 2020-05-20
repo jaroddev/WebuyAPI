@@ -25,7 +25,7 @@ public class User implements Serializable {
 	private String role;
 
 	// Shop recommendation
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private GPSLocationPointer gpsLocationPointer;
 
 	// Define the user to other user

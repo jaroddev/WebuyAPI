@@ -24,13 +24,13 @@ public class ShopController {
 	ShopJPARepository shopJpaRepository;
 	
 	@GetMapping("/shops")
-	public Collection<Shop> findAllShop(){
+	public Collection<Shop> getAllShops(){
 		return this.shopJpaRepository.findAll();
 	}
 	
 	
 	@GetMapping("/shops/{id}")
-	public Shop findShopById(@PathVariable Long id){
+	public Shop getShopById(@PathVariable Long id){
 		Shop shop = null;
 
 		Optional<Shop> optShop = shopJpaRepository.findById(id);
@@ -56,7 +56,7 @@ public class ShopController {
 	
 	@PutMapping("/shops/{id}")
 	public void updateShopById(@PathVariable Long id, @RequestBody Shop newShop) {
-		Shop oldShop = findShopById(id);
+		Shop oldShop = getShopById(id);
 		if(oldShop.getId().equals(newShop.getId()))
 			this.shopJpaRepository.save(newShop);
 		
