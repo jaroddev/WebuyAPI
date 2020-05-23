@@ -3,9 +3,11 @@ package com.webuy.WebuyAPI.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.GeneratedValue;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class FriendRequest implements Serializable {
@@ -14,9 +16,13 @@ public class FriendRequest implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@JsonIgnoreProperties({ "friends", "sentFriendRequests", "receivedFriendRequests", "groups", "groupsCreate",
+			"sentGroupInvitations", "receivedGroupInvitations" })
 	@OneToOne
 	private User sender;
 
+	@JsonIgnoreProperties({ "friends", "sentFriendRequests", "receivedFriendRequests", "groups", "groupsCreate",
+			"sentGroupInvitations", "receivedGroupInvitations" })
 	@OneToOne
 	private User receiver;
 
@@ -24,9 +30,9 @@ public class FriendRequest implements Serializable {
 		return id;
 	}
 
-	/*public void setId(Long id) {
-	this.id = id;
-}*/
+	/*
+	 * public void setId(Long id) { this.id = id; }
+	 */
 
 	public User getSender() {
 		return sender;
