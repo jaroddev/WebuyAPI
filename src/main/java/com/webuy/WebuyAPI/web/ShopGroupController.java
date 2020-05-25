@@ -10,54 +10,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.webuy.WebuyAPI.dao.ShopGroupJPARepository;
 import com.webuy.WebuyAPI.entities.ShopGroup;
 
+@RestController
 public class ShopGroupController {
 
 	@Autowired
 	private ShopGroupJPARepository shopGroupJpaRepository;
 
-	@GetMapping("/shopGroups")
-	public Collection<ShopGroup> getAllShopGroups(){
+	@GetMapping("/shop-groups")
+	public Collection<ShopGroup> getAllShopGroups() {
 		return this.shopGroupJpaRepository.findAll();
 	}
-	
-	@GetMapping("shopGroups/{id}")
-	public ShopGroup getShopGroupById(Long id)
-	{
+
+	@GetMapping("/shop-groups/{id}")
+	public ShopGroup getShopGroupById(@PathVariable Long id) {
 		ShopGroup shopGroup = null;
 
 		Optional<ShopGroup> shopGroupOptional = shopGroupJpaRepository.findById(id);
-		if (shopGroupOptional.isPresent()) {
+		if(shopGroupOptional.isPresent()) {
 			shopGroup = shopGroupJpaRepository.findById(id).get();
 		}
 
 		return shopGroup;
 	}
-	
-	@PostMapping("/shopGroups")
+
+	@PostMapping("/shop-groups")
 	public void createShopGroup(@RequestBody ShopGroup shopGroup) {
 		this.shopGroupJpaRepository.save(shopGroup);
 	}
-	
-	@PutMapping("/shopGroups/{id}")
-	public void updateShopGroup(@PathVariable Long id, @RequestBody ShopGroup newShopGroup) 
-	{
+
+	@PutMapping("/shop-groups/{id}")
+	public void updateShopGroup(@PathVariable Long id, @RequestBody ShopGroup newShopGroup) {
 		ShopGroup oldShopGroup = getShopGroupById(id);
-		if(oldShopGroup.getId().equals(newShopGroup.getId()))
-				this.shopGroupJpaRepository.save(newShopGroup);
-	}
-	
-	@PutMapping("/shopGroups")
-	public void updateShopGroup(@RequestBody ShopGroup newShopGroup) 
-	{
+		if(oldShopGroup != null && oldShopGroup.getId().equals(newShopGroup.getId()))
 			this.shopGroupJpaRepository.save(newShopGroup);
 	}
-	
-	@DeleteMapping("/shopGroups/{id}")
-	public void deleteShop(@PathVariable Long id) {
+
+	@PutMapping("/shop-groups")
+	public void updateShopGroup(@RequestBody ShopGroup newShopGroup) {
+		this.shopGroupJpaRepository.save(newShopGroup);
+	}
+
+	@DeleteMapping("/shop-groups/{id}")
+	public void deleteShopGroup(@PathVariable Long id) {
 		this.shopGroupJpaRepository.deleteById(id);
 	}
+
 }

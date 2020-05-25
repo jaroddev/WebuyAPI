@@ -15,21 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webuy.WebuyAPI.dao.ProductJPARepository;
 import com.webuy.WebuyAPI.entities.Product;
 
-
 @RestController
 public class ProductController {
-	
+
 	@Autowired
 	private ProductJPARepository productJpaRepository;
 
 	@GetMapping("/products")
-	public Collection<Product> getAllProducts(){
+	public Collection<Product> getAllProducts() {
 		return this.productJpaRepository.findAll();
 	}
-	
-	@GetMapping("products/{id}")
-	public Product getProductById(Long id)
-	{
+
+	@GetMapping("/products/{id}")
+	public Product getProductById(@PathVariable Long id) {
 		Product product = null;
 
 		Optional<Product> productOptional = productJpaRepository.findById(id);
@@ -39,29 +37,27 @@ public class ProductController {
 
 		return product;
 	}
-	
+
 	@PostMapping("/products")
 	public void createProduct(@RequestBody Product product) {
 		this.productJpaRepository.save(product);
 	}
-	
+
 	@PutMapping("/products/{id}")
-	public void updateProduct(@PathVariable Long id, @RequestBody Product newProduct) 
-	{
+	public void updateProduct(@PathVariable Long id, @RequestBody Product newProduct) {
 		Product oldProduct = getProductById(id);
-		if(oldProduct.getId().equals(newProduct.getId()))
-				this.productJpaRepository.save(newProduct);
-	}
-	
-	@PutMapping("/products")
-	public void updateProduct(@RequestBody Product newProduct) 
-	{
+		if (oldProduct.getId().equals(newProduct.getId()))
 			this.productJpaRepository.save(newProduct);
 	}
-	
+
+	@PutMapping("/products")
+	public void updateProduct(@RequestBody Product newProduct) {
+		this.productJpaRepository.save(newProduct);
+	}
+
 	@DeleteMapping("/products/{id}")
-	public void deleteShop(@PathVariable Long id) {
+	public void deleteProduct(@PathVariable Long id) {
 		this.productJpaRepository.deleteById(id);
 	}
-	
+
 }

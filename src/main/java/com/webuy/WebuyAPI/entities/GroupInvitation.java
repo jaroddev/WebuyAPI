@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class GroupInvitation implements Serializable {
@@ -15,10 +16,15 @@ public class GroupInvitation implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@JsonIgnoreProperties({ "friends", "sentFriendRequests", "receivedFriendRequests", "groups", "groupsCreate",
+			"sentGroupInvitations", "receivedGroupInvitations" })
 	@ManyToOne
 	private User sender;
+	@JsonIgnoreProperties({ "friends", "sentFriendRequests", "receivedFriendRequests", "groups", "groupsCreate",
+			"sentGroupInvitations", "receivedGroupInvitations" })
 	@ManyToOne
 	private User receiver;
+	@JsonIgnoreProperties({ "leader", "members", "messages" })
 	@ManyToOne
 	private Group group;
 
@@ -26,9 +32,9 @@ public class GroupInvitation implements Serializable {
 		return id;
 	}
 
-	/*public void setId(Long id) {
-	this.id = id;
-}*/
+	/*
+	 * public void setId(Long id) { this.id = id; }
+	 */
 
 	public User getSender() {
 		return sender;

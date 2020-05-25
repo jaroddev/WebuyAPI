@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webuy.WebuyAPI.dao.UserJPARepository;
 import com.webuy.WebuyAPI.entities.User;
 
-
-
-
 @RestController
 public class UserController {
 
@@ -25,13 +22,12 @@ public class UserController {
 	private UserJPARepository userJpaRepository;
 
 	@GetMapping("/users")
-	public Collection<User> getAllUsers(){
+	public Collection<User> getAllUsers() {
 		return this.userJpaRepository.findAll();
 	}
-	
-	@GetMapping("users/{id}")
-	public User getUserById(Long id)
-	{
+
+	@GetMapping("/users/{id}")
+	public User getUserById(@PathVariable Long id) {
 		User user = null;
 
 		Optional<User> userOptional = userJpaRepository.findById(id);
@@ -41,29 +37,27 @@ public class UserController {
 
 		return user;
 	}
-	
+
 	@PostMapping("/users")
 	public void createUser(@RequestBody User user) {
 		this.userJpaRepository.save(user);
 	}
-	
+
 	@PutMapping("/users/{id}")
-	public void updateUser(@PathVariable Long id, @RequestBody User newUser) 
-	{
+	public void updateUser(@PathVariable Long id, @RequestBody User newUser) {
 		User oldUser = getUserById(id);
-		if(oldUser.getId().equals(newUser.getId()))
-				this.userJpaRepository.save(newUser);
-	}
-	
-	@PutMapping("/users")
-	public void updateUser(@RequestBody User newUser) 
-	{
+		if (oldUser.getId().equals(newUser.getId()))
 			this.userJpaRepository.save(newUser);
 	}
-	
+
+	@PutMapping("/users")
+	public void updateUser(@RequestBody User newUser) {
+		this.userJpaRepository.save(newUser);
+	}
+
 	@DeleteMapping("/users/{id}")
-	public void deleteShop(@PathVariable Long id) {
+	public void deleteUser(@PathVariable Long id) {
 		this.userJpaRepository.deleteById(id);
 	}
-	
+
 }

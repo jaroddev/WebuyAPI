@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Message implements Serializable {
 
@@ -18,6 +20,8 @@ public class Message implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@JsonIgnoreProperties({ "friends", "sentFriendRequests", "receivedFriendRequests", "groups", "groupsCreate",
+			"sentGroupInvitations", "receivedGroupInvitations" })
 	@ManyToOne
 	private User creator;
 
@@ -30,9 +34,9 @@ public class Message implements Serializable {
 		return id;
 	}
 
-	/*public void setId(Long id) {
-	this.id = id;
-}*/
+	/*
+	 * public void setId(Long id) { this.id = id; }
+	 */
 
 	public User getCreator() {
 		return creator;

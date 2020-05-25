@@ -22,13 +22,12 @@ public class OfferController {
 	private OfferJPARepository offerJpaRepository;
 
 	@GetMapping("/offers")
-	public Collection<Offer> getAllOffers(){
+	public Collection<Offer> getAllOffers() {
 		return this.offerJpaRepository.findAll();
 	}
-	
-	@GetMapping("offers/{id}")
-	public Offer getOfferById(Long id)
-	{
+
+	@GetMapping("/offers/{id}")
+	public Offer getOfferById(@PathVariable Long id) {
 		Offer offer = null;
 
 		Optional<Offer> offerOptional = offerJpaRepository.findById(id);
@@ -38,28 +37,27 @@ public class OfferController {
 
 		return offer;
 	}
-	
+
 	@PostMapping("/offers")
 	public void createOffer(@RequestBody Offer offer) {
 		this.offerJpaRepository.save(offer);
 	}
-	
+
 	@PutMapping("/offers/{id}")
-	public void updateOffer(@PathVariable Long id, @RequestBody Offer newOffer) 
-	{
+	public void updateOffer(@PathVariable Long id, @RequestBody Offer newOffer) {
 		Offer oldOffer = getOfferById(id);
-		if(oldOffer.getId().equals(newOffer.getId()))
-				this.offerJpaRepository.save(newOffer);
-	}
-	
-	@PutMapping("/offers")
-	public void updateOffer(@RequestBody Offer newOffer) 
-	{
+		if (oldOffer.getId().equals(newOffer.getId()))
 			this.offerJpaRepository.save(newOffer);
 	}
-	
+
+	@PutMapping("/offers")
+	public void updateOffer(@RequestBody Offer newOffer) {
+		this.offerJpaRepository.save(newOffer);
+	}
+
 	@DeleteMapping("/offers/{id}")
-	public void deleteShop(@PathVariable Long id) {
+	public void deleteOffer(@PathVariable Long id) {
 		this.offerJpaRepository.deleteById(id);
 	}
+
 }

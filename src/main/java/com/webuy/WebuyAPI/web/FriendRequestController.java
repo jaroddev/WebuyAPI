@@ -10,54 +10,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.webuy.WebuyAPI.dao.FriendRequestJPARepository;
 import com.webuy.WebuyAPI.entities.FriendRequest;
 
+@RestController
 public class FriendRequestController {
 
 	@Autowired
 	private FriendRequestJPARepository friendRequestJpaRepository;
 
-	@GetMapping("/friendRequests")
-	public Collection<FriendRequest> getAllFriendRequests(){
+	@GetMapping("/friend-requests")
+	public Collection<FriendRequest> getAllFriendRequests() {
 		return this.friendRequestJpaRepository.findAll();
 	}
-	
-	@GetMapping("friendRequests/{id}")
-	public FriendRequest getFriendRequestById(Long id)
-	{
+
+	@GetMapping("/friend-requests/{id}")
+	public FriendRequest getFriendRequestById(@PathVariable Long id) {
 		FriendRequest friendRequest = null;
 
 		Optional<FriendRequest> friendRequestOptional = friendRequestJpaRepository.findById(id);
-		if (friendRequestOptional.isPresent()) {
+		if(friendRequestOptional.isPresent()) {
 			friendRequest = friendRequestJpaRepository.findById(id).get();
 		}
 
 		return friendRequest;
 	}
-	
-	@PostMapping("/friendRequests")
+
+	@PostMapping("/friend-requests")
 	public void createFriendRequest(@RequestBody FriendRequest friendRequest) {
 		this.friendRequestJpaRepository.save(friendRequest);
 	}
-	
-	@PutMapping("/friendRequests/{id}")
-	public void updateFriendRequest(@PathVariable Long id, @RequestBody FriendRequest newFriendRequest) 
-	{
+
+	@PutMapping("/friend-requests/{id}")
+	public void updateFriendRequest(@PathVariable Long id, @RequestBody FriendRequest newFriendRequest) {
 		FriendRequest oldFriendRequest = getFriendRequestById(id);
-		if(oldFriendRequest.getId().equals(newFriendRequest.getId()))
-				this.friendRequestJpaRepository.save(newFriendRequest);
-	}
-	
-	@PutMapping("/friendRequests")
-	public void updateFriendRequest(@RequestBody FriendRequest newFriendRequest) 
-	{
+		if(oldFriendRequest != null && oldFriendRequest.getId().equals(newFriendRequest.getId()))
 			this.friendRequestJpaRepository.save(newFriendRequest);
 	}
-	
-	@DeleteMapping("/friendRequests/{id}")
-	public void deleteShop(@PathVariable Long id) {
+
+	@PutMapping("/friend-requests")
+	public void updateFriendRequest(@RequestBody FriendRequest newFriendRequest) {
+		this.friendRequestJpaRepository.save(newFriendRequest);
+	}
+
+	@DeleteMapping("/friend-requests/{id}")
+	public void deleteFriendRequest(@PathVariable Long id) {
 		this.friendRequestJpaRepository.deleteById(id);
 	}
+
 }

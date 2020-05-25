@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class User implements Serializable {
 
@@ -31,24 +33,31 @@ public class User implements Serializable {
 	// Define the user to other user
 	private String name;
 
+	@JsonIgnoreProperties({ "friends" })
 	@ManyToMany
 	private Collection<User> friends;
 
+	@JsonIgnoreProperties({ "sender" })
 	@OneToMany
 	private Collection<FriendRequest> sentFriendRequests;
 
+	@JsonIgnoreProperties({ "receiver" })
 	@OneToMany
 	private Collection<FriendRequest> receivedFriendRequests;
 
+	@JsonIgnoreProperties({ "members", "messages" })
 	@ManyToMany
 	private Collection<Group> groups;
 
+	@JsonIgnoreProperties({ "leader", "members", "messages" })
 	@OneToMany
 	private Collection<Group> groupsCreate;
 
+	@JsonIgnoreProperties({ "sender" })
 	@OneToMany
 	private Collection<GroupInvitation> sentGroupInvitations;
 
+	@JsonIgnoreProperties({ "receiver" })
 	@OneToMany
 	private Collection<GroupInvitation> receivedGroupInvitations;
 
@@ -56,9 +65,9 @@ public class User implements Serializable {
 		return id;
 	}
 
-	/*public void setId(Long id) {
-	this.id = id;
-}*/
+	/*
+	 * public void setId(Long id) { this.id = id; }
+	 */
 
 	public String getEmail() {
 		return email;
