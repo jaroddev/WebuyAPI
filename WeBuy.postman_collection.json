@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b8ef8a4a-e0ae-403a-898b-87a9d361ce90",
+		"_postman_id": "c13688ca-cc9d-a2aa-bcf2-d5c32c2ce12c",
 		"name": "WeBuy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -193,19 +193,19 @@
 					"name": "Shop",
 					"item": [
 						{
-							"name": "Get Shop List",
+							"name": "Get All Shops",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shop",
+									"raw": "http://localhost:8080/shops",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"shop"
+										"shops"
 									]
 								},
 								"description": "Récupére les magasins, **___pagination___** disponible."
@@ -214,30 +214,24 @@
 						},
 						{
 							"name": "Get a shop",
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"accept": true
-								}
-							},
 							"request": {
 								"method": "GET",
 								"header": [
 									{
 										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8080/shop/30",
+									"raw": "http://localhost:8080/testShops/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"shop",
-										"30"
+										"testShops",
+										"1"
 									]
 								}
 							},
@@ -245,33 +239,27 @@
 						},
 						{
 							"name": "Create a shop",
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"content-type": true
-								}
-							},
 							"request": {
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"city\": \"La riche\",\n\t\t\"postalCode\": \"37520\",\n\t\t\"department\": \"37\"\n\t},\n\t\"image\": \"http:www.fakeimage.com/geant\",\n\t\"name\": \"Geant\"\n}"
+									"raw": "{\r\n\t\r\n\t\"address\": {\r\n            \r\n            \"city\": \"Tours\",\r\n            \"postalCode\": \"37000\",\r\n            \"department\": \"37\",\r\n            \"country\": null,\r\n            \"gpslocationPointer\": null\r\n        },\r\n        \"images\": {\r\n        \t\"images\": [\r\n        \t\t\t{\r\n        \t\t\t\t\"urlImage\":\"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_1.jpg\",\r\n        \t\t\t\t\"alternativeText\": \"carrefour_city_tours_grammont_1\"\r\n        \t\t\t},\r\n        \t\t\t{\r\n        \t\t\t\t\"urlImage\":\"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_2.jpg\",\r\n        \t\t\t\t\"alternativeText\": \"carrefour_city_tours_grammont_2\"\r\n        \t\t\t}\r\n        \t\t]\r\n        },\r\n        \"shopGroup\": null,\r\n        \"products\": [],\r\n        \"offers\": []\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/shop",
+									"raw": "http://localhost:8080/shops",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"shop"
+										"shops"
 									]
 								}
 							},
@@ -284,29 +272,22 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Auchan\",\n    \"image\": \"http:www.fakeimage.com/auchan\",\n    \"address\": {\n        \"id\": 17,\n        \"city\": \"Angers\",\n        \"postalCode\": \"49000\",\n        \"department\": \"49\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "{\n    \"id\": 1,\n    \"address\": {\n        \"id\": 2,\n        \"city\": \"Tours centre update sans ID\",\n        \"postalCode\": \"37000\",\n        \"department\": \"37\",\n        \"country\": null,\n        \"gpslocationPointer\": null\n    },\n    \"images\": {\n        \"id\": 3,\n        \"images\": [\n            {\n                \"id\": 4,\n                \"urlImage\": \"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_1.jpg\",\n                \"alternativeText\": \"carrefour_city_tours_grammont_1\"\n            },\n            {\n                \"id\": 5,\n                \"urlImage\": \"http://localhost/webuy_resources/shops_img/carrefour_city_tours_grammont_2.jpg\",\n                \"alternativeText\": \"carrefour_city_tours_grammont_2\"\n            }\n        ]\n    },\n    \"shopGroup\": null,\n    \"products\": [],\n    \"offers\": []\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/shop/14",
+									"raw": "http://localhost:8080/shops",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"shop",
-										"14"
+										"shops"
 									]
 								}
 							},
@@ -317,8 +298,12 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
 								"url": {
-									"raw": "http://localhost:8080/shop/28",
+									"raw": "http://localhost:8080/shop/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -326,7 +311,7 @@
 									"port": "8080",
 									"path": [
 										"shop",
-										"28"
+										"1"
 									]
 								}
 							},
@@ -341,11 +326,6 @@
 					"item": [
 						{
 							"name": "Get a user",
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"accept": true
-								}
-							},
 							"request": {
 								"method": "GET",
 								"header": [
@@ -372,11 +352,6 @@
 						},
 						{
 							"name": "Create a user",
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"content-type": true
-								}
-							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -417,12 +392,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"admin@nathalie.lignot\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"BigBen\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Nathalie Lignot\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": null\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "{\r\n    \"email\": \"admin@nathalie.lignot\",\r\n    \"phoneNumber\": null,\r\n    \"password\": \"BigBen\",\r\n    \"role\": \"Admin\",\r\n    \"name\": \"Nathalie Lignot\",\r\n    \"friends\": [],\r\n    \"sentFriendRequests\": [],\r\n    \"receivedFriendRequests\": [],\r\n    \"groups\": [],\r\n    \"groupsCreate\": [],\r\n    \"sentGroupInvitations\": [],\r\n    \"receivedGroupInvitations\": [],\r\n    \"gpslocationPointer\": null\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8080/user/1",
@@ -458,6 +428,25 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -467,19 +456,19 @@
 					"name": "Product",
 					"item": [
 						{
-							"name": "Get Product List",
+							"name": "Get All Products",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/product",
+									"raw": "http://localhost:8080/products",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"product"
+										"products"
 									]
 								},
 								"description": "Récupére les magasins, **___pagination___** disponible."
@@ -488,11 +477,6 @@
 						},
 						{
 							"name": "Create a product",
-							"protocolProfileBehavior": {
-								"disabledSystemHeaders": {
-									"content-type": true
-								}
-							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -555,6 +539,138 @@
 										"product",
 										"1"
 									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Group",
+					"item": [
+						{
+							"name": "GET All Groups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FriendRequest",
+					"item": [
+						{
+							"name": "Get All FriendRequests",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/friendRequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"friendRequests"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Message",
+					"item": [
+						{
+							"name": "GET All Messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GroupInvitation",
+					"item": [
+						{
+							"name": "Get All GroupInvitations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groupInvitations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groupInvitations"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Offer",
+					"item": [
+						{
+							"name": "Get All Offers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ShopGroup",
+					"item": [
+						{
+							"name": "Get All ShopGroups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
 								}
 							},
 							"response": []
