@@ -37,6 +37,18 @@ public class UserController {
 
 		return user;
 	}
+	
+	@GetMapping("/users/{email}/{password}")
+	public User getUserByAuthentification(@PathVariable String email, @PathVariable String password) {
+		User user = null;
+
+		Optional<User> userOptional = userJpaRepository.findUserByAuthentification(email, password);
+		if (userOptional.isPresent()) {
+			user = userJpaRepository.findUserByAuthentification(email, password).get();
+		}
+
+		return user;
+	}
 
 	@PostMapping("/users")
 	public void createUser(@RequestBody User user) {
