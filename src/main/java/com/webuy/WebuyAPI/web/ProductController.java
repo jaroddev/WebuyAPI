@@ -13,13 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webuy.WebuyAPI.dao.ProductJPARepository;
+import com.webuy.WebuyAPI.dao.ShopJPARepository;
+import com.webuy.WebuyAPI.dto.ProductDTO;
 import com.webuy.WebuyAPI.entities.Product;
+import com.webuy.WebuyAPI.entities.Shop;
 
 @RestController
 public class ProductController {
 
 	@Autowired
 	private ProductJPARepository productJpaRepository;
+
+	@Autowired
+	private ShopJPARepository shopJpaRepository;
 
 	@GetMapping("/products")
 	public Collection<Product> getAllProducts() {
@@ -58,6 +64,55 @@ public class ProductController {
 	@DeleteMapping("/products/{id}")
 	public void deleteProduct(@PathVariable Long id) {
 		this.productJpaRepository.deleteById(id);
+	}
+
+	@PostMapping("/products/of-shop")
+	public void createProductOfShop(@RequestBody ProductDTO productDTO) {
+		Product product = new Product();
+		product.setName(productDTO.getName());
+		product.setPrice(productDTO.getPrice());
+		product.setStock(productDTO.getStock());
+		product.setImages(productDTO.getImages());
+
+		product = productJpaRepository.save(product);
+
+		Optional<Shop> optShop = shopJpaRepository.findById(productDTO.getShopId());
+
+		if (optShop.isPresent()) {
+			Shop shop = optShop.get();
+
+			shop.getProducts().add(product);
+
+			shopJpaRepository.save(shop);
+		}
+	}
+
+	@PutMapping("/products/of-shop/{id}")
+	public void updateProductOfShop(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+		Optional<Product> optProduct = productJpaRepository.findById(id);
+
+		if (!optProduct.isPresent()) {
+			return;
+		}
+
+		Product product = new Product();
+		product.setId(productDTO.getId());
+		product.setName(productDTO.getName());
+		product.setPrice(productDTO.getPrice());
+		product.setStock(productDTO.getStock());
+		product.setImages(productDTO.getImages());
+
+		product = productJpaRepository.save(product);
+
+		Optional<Shop> optShop = shopJpaRepository.findById(productDTO.getShopId());
+
+		if (optShop.isPresent()) {
+			Shop shop = optShop.get();
+
+			shop.getProducts().add(product);
+
+			shopJpaRepository.save(shop);
+		}
 	}
 
 }

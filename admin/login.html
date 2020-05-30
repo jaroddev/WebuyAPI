@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Connexion</title>
+        
+        <link rel="stylesheet" href="/admin.css">
+        <style>
+        
+        .optionsRight {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        #connect {
+            font-size: 1.5em;
+        }
+        
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="title">Connexion</h1>
+        </header>
+        
+        <div class="centerer">
+            <div class="container center">
+                <div class="labeledInput">
+                    <input name="uid">
+                    <label>Identifiant</label>
+                </div>
+                <div class="labeledInput">
+                    <input type="password" name="password">
+                    <label>Mot de passe</label>
+                </div>
+                <div class="optionsRight">
+                    <button id="connect">Se connecter</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <span>WeBuy</span>
+        </footer>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+        
+        {
+            const uidInput = document.querySelector("input[name=uid]");
+            const passwordInput = document.querySelector("input[name=password]");
+            
+            document.querySelector("#connect").addEventListener("click", function() {
+                const uid = uidInput.value;
+                const password = passwordInput.value;
+                
+                console.log(uid, password);
+            });
+        }
+        
+        </script>
+    </body>
+</html>

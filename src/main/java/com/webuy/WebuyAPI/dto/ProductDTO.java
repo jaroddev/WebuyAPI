@@ -1,25 +1,17 @@
-package com.webuy.WebuyAPI.entities;
+package com.webuy.WebuyAPI.dto;
 
-import java.io.Serializable;
+import com.webuy.WebuyAPI.entities.ImagesPointer;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+public class ProductDTO {
 
-@Entity
-public class Product implements Serializable {
-
-	@Id
-	@GeneratedValue
 	private Long id;
 	private String name;
 	private double price;
 	private int stock;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private ImagesPointer images;
+
+	private Long shopId;
 
 	public Long getId() {
 		return id;
@@ -61,12 +53,12 @@ public class Product implements Serializable {
 		this.images = images;
 	}
 
-	public void addImage(Image image) {
-		this.images.addImage(image);
+	public Long getShopId() {
+		return shopId;
 	}
 
-	public void removeImage(Long imageId) {
-		this.images.removeImage(imageId);
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
 	}
 
 }

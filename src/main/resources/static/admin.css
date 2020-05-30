@@ -1,0 +1,266 @@
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 0;
+    height: 100%;
+    
+    font-family: Segoe UI;
+}
+
+input[type=radio], input[type=checkbox] {
+    display: none;
+}
+
+input[type=radio] + label, input[type=checkbox] + label {
+    transition: border-color 0.25s;
+    
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px;
+    padding: 1em;
+    
+    border-color: lightGray;
+}
+
+input[type=radio] + label:hover, input[type=checkbox] + label:hover {
+    transition: 0s;
+    
+    border-color: black;
+}
+
+input[type=radio]:checked + label, input[type=checkbox]:checked + label {
+    border-color: green;
+    background-color: lime;
+}
+
+input[type=radio].saved:not(:checked):not(:disabled) + label, input[type=checkbox].saved:not(:checked):not(:disabled) + label {
+    background-color: #DFFFDF;
+}
+
+input[type=radio]:disabled + label {
+    background-color: lightGray;
+}
+
+.radioArea, .checkboxArea, .pick-one {
+    display: flex;
+    
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+button, .button {
+    transition: background 0.125s;
+    
+    cursor: pointer;
+    
+    font-family: Segoe UI;
+    text-align: center;
+    
+    box-sizing: border-box;
+    border-style: none;
+    border-radius: 4px;
+    padding: 0.0625em 0.375em;
+    
+    box-shadow: 0 0 4px #0000003F;
+    background-color: #ffeedd;
+}
+
+button:hover, .button:hover {
+    transition: background 0s;
+    
+    background-color: #FFDFBF;
+}
+
+header {
+    position: relative;
+    z-index: 1;
+    
+    display: flex;
+    align-items: center;
+    
+    vertical-align: center;
+    
+    background-color: #FFBB33;
+    color: white;
+}
+
+header > .title {
+    margin: 0;
+    padding: 0.67em 0.75em;
+}
+
+header > a {
+    transition: border-color 0.25s, background 0.25s, color 0.5s;
+    
+    box-sizing: border-box;
+    border-style: solid;
+    padding: 0 0.5em 0.125em 0.5em;
+    
+    text-decoration: none;
+    border-color: #FFFFFF00;
+    color: white;
+}
+
+header > a:hover {
+    transition: border-color 0.125s, background 0.125s, color 0.125s;
+    
+    border-color: #FFFFFF7F;
+}
+
+header > a:active {
+    transition: background 0s;
+    
+    border-color: white;
+    background-color: white;
+    color: #FFBB33;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+}
+
+.newEntity {
+    margin-left: 1em;
+    border-radius: 512px;
+    padding: 0.875em;
+    
+    font-family: monospace;
+    font-size: 10px;
+    text-decoration: none;
+    
+    color: black;
+}
+
+button.large {
+    display: block;
+    
+    margin: 1em 0;
+    padding: 0.125em 0.5em;
+    
+    font-size: 20px;
+}
+
+small {
+    color: gray;
+}
+
+main {
+    flex-grow: 1;
+    
+    display: flex;
+    
+    background-color: #EBE2D3;
+}
+
+aside.margin {
+    width: 8.33%;
+}
+
+section {
+    /flex-grow: 1;
+    
+    overflow-x: hidden;
+    
+    padding-left: 32px;
+    width: 91.66%;
+    
+    background-color: white;
+}
+
+footer {
+    display: flex;
+    
+    border-top: 1px solid #0000003F;
+}
+
+footer > * {
+    box-sizing: border-box;
+    padding: 0.5em 0;
+}
+
+/*  */
+
+.labeledInput {
+    position: relative;
+    
+    margin: 1em 0;
+    
+    font-size: 20px;
+}
+
+.labeledInput > input {
+    outline: none;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: 12px;
+    padding: 0.5em 0.5em 0.25em 0.5em;
+    width: 100%;
+    
+    border-color: lightGray;
+    font-size: 1em;
+}
+
+.labeledInput > input:focus {
+    border-color: #1FE1FF;
+}
+
+.labeledInput > input + label {
+    position: absolute;
+    top: -0.75em;
+    left: 0.5em;
+    
+    padding: 0 0.25em;
+    
+    background-color: white;
+    
+    font-size: 0.75em;
+}
+
+.labeledInput > input:focus + label {
+    color: #0FD1EF;
+}
+
+/*  */
+
+.centerer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 32px 128px;
+    width: 768px;
+    min-height: 384px;
+    
+    box-shadow: 0 4px 10px 0 #0000003F;
+}
+
+/*  */
+
+@media only screen and (max-width: 768px) {
+    aside.margin {
+        width: 0;
+    }
+    
+    section {
+        padding-left: 0;
+        width: 100%;
+    }
+}

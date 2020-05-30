@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        
+        <link rel="stylesheet" href="/admin.css">
+        <style>
+        
+        /**/
+        
+        th {
+            border-bottom: 1px solid #0000003F;
+        }
+        
+        .sort {
+            user-select: none;
+            cursor: pointer;
+        }
+        
+        .sort::after {
+            
+        }
+        
+        .sort.asc::after {
+            content: "▲";
+        }
+        
+        .sort:not(.asc)::after {
+            content: "▼";
+        }
+        
+        #create {
+            border-radius: 0;
+            
+            box-shadow: none;
+        }
+        
+        /**/
+        
+        .rowOptions {
+            display: flex;
+        }
+        
+        .rowOptions > * {
+            margin: 0 0.5em;
+            width: 100%;
+        }
+        
+        /*  */
+        
+        table {
+            width: 100%;
+        }
+        
+        table img {
+            max-height: 24px;
+        }
+        
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="title">Liste</h1>
+            <a href="/admin/shops">Magasins</a>
+            <a href="/admin/shop-groups">Groupes de magasin</a>
+            <a href="/admin/products">Produits</a>
+            <a href="/admin/offers">Promotions</a>
+        </header>
+        
+        <main>
+            <aside class="margin"></aside>
+            
+            <section>
+                <table>
+                    <thead><tr></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
+        
+        <footer>
+            <span>WeBuy</span>
+        </footer>
+        
+        <script src="/jQuery.js"></script>
+        <script src="/admin.js"></script>
+        <script>
+        
+        document.title = document.querySelector("header h1.title").innerHTML = (function() {
+            if(entityName === "shops") {
+                return "Liste des magasins";
+            }
+            
+            if(entityName === "shop-groups") {
+                return "Liste des groupes de magasin";
+            }
+            
+            if(entityName === "products") {
+                return "Liste des produits";
+            }
+            
+            if(entityName === "offers") {
+                return "Liste des promotions";
+            }
+            
+            return "Liste";
+        })();
+        
+        </script>
+        <script>
+        
+        ////  ////
+        
+        const thead = document.querySelector("table > thead > tr");
+        const entityList = document.querySelector("table > tbody");
+        
+        function makeColumnSorter(innerHTML) {
+            const sorter = document.createElement("th");
+            
+            sorter.className = "sort";
+            sorter.innerHTML = innerHTML;
+            sorter.addEventListener("click", function() {
+                const index = Array.from(thead.children).indexOf(this);
+                let orderFn;
+                
+                if(jQuery(sorter).hasClass("asc")) {
+                    jQuery(sorter).removeClass("asc");
+                    
+                    orderFn = function(a, b) {return a > b;};
+                }
+                
+                else {
+                    jQuery(sorter).addClass("asc");
+                    
+                    orderFn = function(a, b) {return a < b;};
+                }
+                
+                const lis = Array.from(entityList.children).sort(function(a, b) {
+                    let valueA = a.children[index].innerHTML;
+                    if(valueA.match(/^\d+$/)) {valueA = Number(valueA);}
+                    let valueB = b.children[index].innerHTML;
+                    if(valueB.match(/^\d+$/)) {valueB = Number(valueB);}
+                    
+                    if(orderFn(valueA, valueB)) {
+                        return -1;
+                    }
+                    
+                    if(!orderFn(valueA, valueB) && valueA !== valueB) {
+                        return +1;
+                    }
+                    
+                    return 0;
+                }).forEach(function(li) {
+                    li.remove();
+                    entityList.appendChild(li);
+                });
+            });
+            
+            return sorter;
+        }
+        
+        ////  ////
+        
+        thead.appendChild(makeColumnSorter("Id"));
+        
+        if(entityName === "shops") {
+            thead.appendChild(makeColumnSorter("Image"));
+            thead.appendChild(makeColumnSorter("Nom"));
+            thead.appendChild(makeColumnSorter("Adresse"));
+        }
+        
+        if(entityName === "shop-groups") {
+            thead.appendChild(makeColumnSorter("Logo"));
+            thead.appendChild(makeColumnSorter("Nom"));
+        }
+        
+        if(entityName === "products") {
+            thead.appendChild(makeColumnSorter("Image"));
+            thead.appendChild(makeColumnSorter("Nom"));
+            thead.appendChild(makeColumnSorter("Prix"));
+            thead.appendChild(makeColumnSorter("Stock"));
+        }
+        
+        if(entityName === "offers") {
+            thead.appendChild(makeColumnSorter("Produit"));
+            thead.appendChild(makeColumnSorter("Prix original"));
+            thead.appendChild(makeColumnSorter("Prix réduit"));
+            thead.appendChild(makeColumnSorter("Quantité requise"));
+            thead.appendChild(makeColumnSorter("Début"));
+            thead.appendChild(makeColumnSorter("Fin"));
+        }
+        
+        thead.appendChild((function() {
+            const button = document.createElement("th");
+            
+            button.className = "button";
+            button.id = "create";
+            button.innerHTML = "Créer";
+            button.addEventListener("click", function() {
+                location.href = "/admin/" + entityName + "/create";
+            });
+            
+            return button;
+        })());
+        
+        ////  ////
+        
+        function makeImgString(src, alt) {
+            return '<img src="' + src + '" alt="' + alt + '">';
+        }
+        
+        function makeNullWarning() {
+            return "<span style='color: red'>null</span>";
+        }
+        
+        function shortDate(dateString) {
+            if(dateString == null) {
+                return null;
+            }
+            
+            const date = new Date(dateString);
+            
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            return year + "/" + (month < 10 ? "0" : "") + month + "/" + (day < 10 ? "0" : "") + day;
+            return (day < 10 ? "0" : "") + day + "/" + (month < 10 ? "0" : "") + month + "/" + year;
+        }
+        
+        ////  ////
+        
+        let entitiesData;
+        
+        jQuery.get("http://localhost:8080/" + entityName).done(function(data) {
+            console.log(data);
+            
+            entitiesData = data;
+            
+            let columnsGiver = function(entity) {
+                return [
+                    entity.id,
+                ];
+            };
+            
+            if(entityName === "shops") {
+                columnsGiver = function(entity) {
+                    return [
+                        entity.id,
+                        (function() {
+                            try {
+                                return makeImgString(entity.shopGroup.logo.urlImage, entity.shopGroup.logo.alternativeText);
+                            } catch(e) {
+                                try {
+                                    return entity.shopGroup.id;
+                                } catch(e) {
+                                    return makeNullWarning();
+                                }
+                            }
+                        })(),
+                        (function() {
+                            try {
+                                return entity.shopGroup.name;
+                            } catch(e) {
+                                return makeNullWarning();
+                            }
+                        })(),
+                        (function() {
+                            try {
+                                return entity.address.city;
+                            } catch(e) {
+                                return makeNullWarning();
+                            }
+                        })(),
+                    ];
+                };
+            }
+            
+            if(entityName === "shop-groups") {
+                columnsGiver = function(entity) {
+                    return [
+                        entity.id,
+                        (function() {
+                            try {
+                                return makeImgString(entity.logo.urlImage, entity.logo.alternativeText);
+                            } catch(e) {
+                                return makeNullWarning();
+                            }
+                        })(),
+                        entity.name,
+                    ];
+                };
+            }
+            
+            if(entityName === "products") {
+                columnsGiver = function(entity) {
+                    return [
+                        entity.id,
+                        (function() {
+                            try {
+                                return makeImgString(entity.images.images[0].urlImage, entity.images.images[0].alternativeText);
+                            } catch(e) {
+                                try {
+                                    return "";
+                                } catch(e) {
+                                    return makeNullWarning();
+                                }
+                            }
+                        })(),
+                        entity.name,
+                        entity.price,
+                        entity.stock,
+                    ];
+                };
+            }
+            
+            if(entityName === "offers") {
+                columnsGiver = function(entity) {
+                    return [
+                        entity.id,
+                        (function() {
+                            try {
+                                return entity.product.name;
+                            } catch(e) {
+                                return makeNullWarning();
+                            }
+                        })(),
+                        (function() {
+                            try {
+                                return entity.product.price;
+                            } catch(e) {
+                                return makeNullWarning();
+                            }
+                        })(),
+                        entity.discountPrice,
+                        entity.discountQuantity,
+                        shortDate(entity.start),
+                        shortDate(entity.end),
+                    ];
+                };
+            }
+            
+            for(let i = 0; i < data.length; ++i) {
+                const entity = data[i];
+                
+                entityList.appendChild((function() {
+                    const tr = document.createElement("tr");
+                    
+                    tr.className = "entity";
+                    
+                    const columns = columnsGiver(entity);
+                    
+                    for(let j in columns) {
+                        tr.appendChild((function() {
+                            const td = document.createElement("td");
+                            
+                            td.innerHTML = columns[j];
+                            
+                            return td;
+                        })());
+                    }
+                    
+                    tr.appendChild((function() {
+                        const td = document.createElement("td");
+                        
+                        td.className = "rowOptions";
+                        
+                        td.appendChild((function() {
+                            const button = document.createElement("button");
+                            
+                            button.className = "edit";
+                            button.innerHTML = "Modifier";
+                            button.addEventListener("click", function() {
+                                location.href = "/admin/" + entityName + "/edit/" + entity.id;
+                            });
+                            
+                            return button;
+                        })());
+                        
+                        td.appendChild((function() {
+                            const button = document.createElement("button");
+                            
+                            button.className = "delete";
+                            button.innerHTML = "Supprimer";
+                            button.addEventListener("click", function() {
+                                jQuery.ajax({
+                                    url: "http://localhost:8080/" + entityName + "/" + entity.id,
+                                    type: "DELETE",
+                                    success: function(result) {
+                                        location.reload();
+                                    },
+                                });
+                            });
+                            
+                            return button;
+                        })());
+                        
+                        return td;
+                    })());
+                    
+                    return tr;
+                })());
+            }
+        });
+        
+        </script>
+    </body>
+</html>

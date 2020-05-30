@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Création</title>
+        
+        <link rel="stylesheet" href="/admin.css">
+        <style>
+        
+        h4 {
+            margin: 0.5em 0;
+        }
+        
+        .row {
+            display: flex;
+            flex-direction: row;
+            
+            margin: 32px 0 32px 32px;
+            border-radius: 16px 0 0 16px;
+            padding: 32px;
+            width: initial;
+            min-height: initial;
+            
+            box-shadow: 0 4px 10px 0 #0000003F;
+        }
+        
+        .row > * {
+            padding: 8px 64px 16px 64px;
+            /width: 100%;
+        }
+        
+        .imageDiv {
+            display: inline-block;
+            
+            position: relative;
+            
+            margin: 8px;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 8px;
+            padding: 32px;
+            
+            border-color: #0000003F;
+        }
+        
+        .imageDiv .removeImage {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        .gridImage {
+            display: inline-flex;
+            flex-direction: column;
+            
+            position: relative;
+            
+            margin: 8px;
+            border-radius: 16px;
+            padding: 16px;
+            width: 144px;
+            min-height: 128px;
+            
+            box-shadow: 0 4px 4px 0 #0000003F;
+        }
+        
+        .gridImage img {
+            max-height: 128px;
+        }
+        
+        .gridImage .rem {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="title"></h1>
+            <a href="/admin/shops">Magasins</a>
+            <a href="/admin/shop-groups">Groupes de magasin</a>
+            <a href="/admin/products">Produits</a>
+            <a href="/admin/offers">Promotions</a>
+        </header>
+        
+        <main>
+            <aside class="margin"></aside>
+            
+            <section>
+                <div class="form shops">
+                    <h2><span>Groupe de magasin</span><a class="button newEntity" href="/admin/shop-groups/create">➕</a></h2>
+                    <div class="pick-one"></div>
+                    
+                    <button class="large addImage">Nouvelle image</button>
+                    <div></div>
+                    
+                    <div class="row">
+                        <div>
+                            <h4><span>Ville</span></h4>
+                            <input name="city">
+                            <h4><span>Département</span></h4>
+                            <input name="department">
+                        </div>
+                        <div>
+                            <h4><span>Code postal</span></h4>
+                            <input name="postalCode">
+                            <h4><span>Pays</span></h4>
+                            <input name="country">
+                        </div>
+                    </div>
+                    
+                    <h2 class="productsTitle">Produits</h2>
+                    <div class="products"></div>
+                    
+                    <button class="large submit"></button>
+                </div>
+                
+                <div class="form shop-groups">
+                    <h2><span>Nom</span></h2>
+                    <input name="name">
+                    <h4><span>URL du logo</span></h4>
+                    <input name="urlImage">
+                    <h4><span>Texte alternatif du logo</span></h4>
+                    <input name="alternativeText">
+                    
+                    <button class="large submit"></button>
+                </div>
+                
+                <div class="form products">
+                    <h2><span>Magasin</span><a class="button newEntity" href="/admin/shops/create">➕</a></h2>
+                    <div class="pick-one"></div>
+                    
+                    <h2><span>Nom</span></h2>
+                    <input name="name">
+                    <h2><span>Prix</span></h2>
+                    <input type="number" name="price">
+                    <h2><span>Stock</span></h2>
+                    <input type="number" name="stock">
+                    
+                    <button class="large addImage">Nouvelle image</button>
+                    <div></div>
+                    
+                    <button class="large submit"></button>
+                </div>
+                
+                <div class="form offers">
+                    <h2><span>Produit</span><a class="button newEntity" href="/admin/products/create">➕</a></h2>
+                    <div class="pick-one"></div>
+                    
+                    <div class="row">
+                        <div>
+                            <h4><span>Prix réduit</span></h4>
+                            <input type="number" name="discountPrice">
+                            <h4><span>Quantité requise</span></h4>
+                            <input type="number" name="discountQuantity">
+                        </div>
+                        <div>
+                            <h4><span>Début de validité</span></h4>
+                            <input type="datetime-local" name="start">
+                            <h4><span>Fin de validité</span></h4>
+                            <input type="datetime-local" name="end">
+                        </div>
+                    </div>
+                    
+                    <button class="large submit"></button>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <span>WeBuy</span>
+        </footer>
+        
+        <script src="/jQuery.js"></script>
+        <script src="/admin.js"></script>
+        <script>
+        
+        document.title = document.querySelector("header h1.title").innerHTML = (function() {
+            if(serviceType === "create") {
+                if(entityName === "shops") {
+                    return "Création de magasin";
+                }
+                
+                if(entityName === "shop-groups") {
+                    return "Création de groupe de magasin";
+                }
+                
+                if(entityName === "products") {
+                    return "Création de produit";
+                }
+                
+                if(entityName === "offers") {
+                    return "Création de promotion";
+                }
+                
+                return "Création";
+            }
+            
+            if(serviceType === "edit") {
+                if(entityName === "shops") {
+                    return "Modification du magasin " + entityId;
+                }
+                
+                if(entityName === "shop-groups") {
+                    return "Modification du groupe de magasin " + entityId;
+                }
+                
+                if(entityName === "products") {
+                    return "Modification du produit " + entityId;
+                }
+                
+                if(entityName === "offers") {
+                    return "Modification de la promotion " + entityId;
+                }
+                
+                return "Modification";
+            }
+            
+            return "";
+        })();
+        
+        ////  ////
+        
+        Array.from(document.querySelectorAll(".form")).forEach(function(form) {
+            if(!jQuery(form).hasClass(entityName)) {
+                form.remove();
+            }
+        });
+        
+        if(entityName === "shops" && serviceType === "create") {
+            document.querySelector(".productsTitle").remove();
+        }
+        
+        ////  ////
+        
+        function makeImageDiv() {
+            const div = document.createElement("div");
+            
+            div.className = "imageDiv";
+            
+            div.appendChild((function() {
+                const button = document.createElement("button");
+                
+                button.className = "removeImage";
+                button.innerHTML = "×";
+                button.addEventListener("click", function() {
+                    div.remove();
+                });
+                
+                return button;
+            })());
+            
+            div.appendChild((function() {
+                const h4 = document.createElement("h4");
+                
+                h4.appendChild((function() {
+                    const span = document.createElement("span");
+                    
+                    span.innerHTML = "URL de l'image";
+                    
+                    return span;
+                })());
+                
+                return h4;
+            })());
+            
+            div.appendChild((function() {
+                const input = document.createElement("input");
+                
+                input.name = "urlImage";
+                
+                return input;
+            })());
+            
+            div.appendChild((function() {
+                const h4 = document.createElement("h4");
+                
+                h4.appendChild((function() {
+                    const span = document.createElement("span");
+                    
+                    span.innerHTML = "Texte alternatif pour l'image";
+                    
+                    return span;
+                })());
+                
+                return h4;
+            })());
+            
+            div.appendChild((function() {
+                const input = document.createElement("input");
+                
+                input.name = "alternativeText";
+                
+                return input;
+            })());
+            
+            return div;
+        }
+        
+        ////  ////
+        
+        const lockTimeout = new LockTimeout("allentitiesloaded");
+        
+        if(entityName === "shops") {
+            const div = document.querySelector(".pick-one");
+            
+            div.appendChild((function() {
+                const radio = document.createElement("input");
+                
+                radio.type = "radio";
+                radio.name = "shopGroups";
+                radio.value = "null";
+                radio.checked = true;
+                
+                return radio;
+            })());
+            
+            jQuery.get("http://localhost:8080/shop-groups").done(function(data) {
+                for(let i = 0; i < data.length; ++i) {
+                    const entity = data[i];
+                    
+                    div.appendChild((function() {
+                        const radio = document.createElement("input");
+                        
+                        radio.type = "radio";
+                        radio.id = "shopGroups" + i;
+                        radio.name = "shopGroups";
+                        radio.value = JSON.stringify(entity);
+                        radio.setAttribute("entity-id", entity.id);
+                        
+                        return radio;
+                    })());
+                    
+                    div.appendChild((function() {
+                        const label = document.createElement("label");
+                        
+                        label.innerHTML = entity.name;
+                        label.setAttribute("for", "shopGroups" + i);
+                        
+                        return label;
+                    })());
+                }
+                
+                lockTimeout.dec();
+            });
+            
+            lockTimeout.inc();
+            
+            // 
+            
+            const imagesDiv = document.querySelector(".addImage + div");
+            
+            document.querySelector(".addImage").addEventListener("click", function() {
+                imagesDiv.appendChild(makeImageDiv());
+            });
+        }
+        
+        if(entityName === "products") {
+            const div = document.querySelector(".pick-one");
+            
+            div.appendChild((function() {
+                const radio = document.createElement("input");
+                
+                radio.type = "radio";
+                radio.name = "shops";
+                radio.value = "null";
+                radio.checked = true;
+                
+                return radio;
+            })());
+            
+            jQuery.get("http://localhost:8080/shops").done(function(data) {
+                for(let i = 0; i < data.length; ++i) {
+                    const entity = data[i];
+                    
+                    div.appendChild((function() {
+                        const radio = document.createElement("input");
+                        
+                        radio.type = "radio";
+                        radio.id = "shops" + i;
+                        radio.name = "shops";
+                        radio.value = JSON.stringify(entity);
+                        radio.setAttribute("entity-id", entity.id);
+                        
+                        return radio;
+                    })());
+                    
+                    div.appendChild((function() {
+                        const label = document.createElement("label");
+                        
+                        label.innerHTML = (function() {
+                            try {
+                                return entity.shopGroup.name + " (" + entity.address.city + ")";
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        label.setAttribute("for", "shops" + i);
+                        
+                        return label;
+                    })());
+                }
+                
+                lockTimeout.dec();
+            });
+            
+            lockTimeout.inc();
+            
+            // 
+            
+            const imagesDiv = document.querySelector(".addImage + div");
+            
+            document.querySelector(".addImage").addEventListener("click", function() {
+                imagesDiv.appendChild(makeImageDiv());
+            });
+        }
+        
+        if(entityName === "offers") {
+            const div = document.querySelector(".pick-one");
+            
+            div.appendChild((function() {
+                const radio = document.createElement("input");
+                
+                radio.type = "radio";
+                radio.name = "products";
+                radio.value = "null";
+                radio.checked = true;
+                
+                return radio;
+            })());
+            
+            jQuery.get("http://localhost:8080/products").done(function(products) {
+                for(let i = 0; i < products.length; ++i) {
+                    const product = products[i];
+                    let label;
+                    
+                    div.appendChild((function() {
+                        const radio = document.createElement("input");
+                        
+                        radio.type = "radio";
+                        radio.id = "products" + i;
+                        radio.name = "products";
+                        radio.value = JSON.stringify(product);
+                        radio.setAttribute("entity-id", product.id);
+                        
+                        return radio;
+                    })());
+                    
+                    div.appendChild((function() {
+                        label = document.createElement("label");
+                        
+                        label.innerHTML = product.name;
+                        label.setAttribute("for", "products" + i);
+                        
+                        return label;
+                    })());
+                    
+                    jQuery.get("http://localhost:8080/shops/having-product/" + product.id).done(function(shop) {
+                        if(shop.shopGroup) {
+                            let plus = "<small>";
+                            
+                            plus += " - " + shop.shopGroup.name;
+                            
+                            if(shop.address) {
+                                plus += " (" + shop.address.city + ")";
+                            }
+                            
+                            plus += "</small>";
+                            
+                            label.innerHTML += plus;
+                        }
+                    });
+                }
+                
+                lockTimeout.dec();
+            });
+            
+            lockTimeout.inc();
+        }
+        
+        lockTimeout.start();
+        
+        ////  ////
+        
+        // 
+        
+        if(serviceType === "create") {
+            const submitButton = document.querySelector(".form > .submit");
+            
+            submitButton.innerHTML = "Créer";
+            
+            submitButton.addEventListener("click", function() {
+                let data = {};
+                
+                if(entityName === "shops") {
+                    data.shopGroup = JSON.parse(document.querySelector("[name=shopGroups]:checked").value);
+                    
+                    data.address = {
+                        city: document.querySelector("[name=city]").value,
+                        country: document.querySelector("[name=country]").value,
+                        department: document.querySelector("[name=department]").value,
+                        postalCode: document.querySelector("[name=postalCode]").value,
+                        gpslocationPointer: {
+                            location: {
+                                // latitude: document.querySelector("[name=latitude]").value,
+                                // longitude: document.querySelector("[name=longitude]").value,
+                                latitude: "",
+                                longitude: "",
+                            },
+                        },
+                    };
+                    
+                    data.images = {
+                        images: [],
+                    };
+                    
+                    const imageDivs = document.querySelector(".addImage + div").children;
+                    
+                    for(let i = 0; i < imageDivs.length; ++i) {
+                        const imageDiv = imageDivs[i];
+                        
+                        data.images.images.push({
+                            urlImage: imageDiv.querySelector("[name=urlImage]").value,
+                            alternativeText: imageDiv.querySelector("[name=alternativeText]").value,
+                        });
+                    }
+                    
+                    data.products = [];
+                    data.offers = [];
+                }
+                
+                if(entityName === "shop-groups") {
+                    data.name = document.querySelector("[name=name]").value;
+                    data.logo = {
+                        urlImage: document.querySelector("[name=urlImage]").value,
+                        alternativeText: document.querySelector("[name=alternativeText]").value,
+                    };
+                }
+                
+                if(entityName === "products") {
+                    data.shopId = (function() {
+                        const shop = JSON.parse(document.querySelector("[name=shops]:checked").value);
+                        
+                        if(shop) {
+                            return shop.id;
+                        }
+                        
+                        return 0;
+                    })();
+                    
+                    data.name = document.querySelector("[name=name]").value;
+                    data.price = Number(document.querySelector("[name=price]").value);
+                    data.stock = Number(document.querySelector("[name=stock]").value);
+                    
+                    data.images = {
+                        images: [],
+                    };
+                    
+                    const imageDivs = document.querySelector(".addImage + div").children;
+                    
+                    for(let i = 0; i < imageDivs.length; ++i) {
+                        const imageDiv = imageDivs[i];
+                        
+                        data.images.images.push({
+                            urlImage: imageDiv.querySelector("[name=urlImage]").value,
+                            alternativeText: imageDiv.querySelector("[name=alternativeText]").value,
+                        });
+                    }
+                }
+                
+                if(entityName === "offers") {
+                    data.discountPrice = Number(document.querySelector("[name=discountPrice]").value);
+                    data.discountQuantity = Number(document.querySelector("[name=discountQuantity]").value);
+                    data.start = document.querySelector("[name=start]").value;
+                    data.end = document.querySelector("[name=end]").value;
+                    
+                    data.product = JSON.parse(document.querySelector("[name=products]:checked").value);
+                }
+                
+                console.log(data);
+                // return;
+                
+                if(entityName === "products") {
+                    jQuery.ajax({
+                        url: "http://localhost:8080/products/of-shop",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(result) {
+                            location.href = "/admin/" + entityName;
+                        },
+                    });
+                }
+                
+                else {
+                    jQuery.ajax({
+                        url: "http://localhost:8080/" + entityName,
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(result) {
+                            location.href = "/admin/" + entityName;
+                        },
+                    });
+                }
+            });
+        }
+        
+        // 
+        
+        if(serviceType === "edit") {
+            function dateToDateTimeLocal(date) {
+                if(date === null) {
+                    return null;
+                }
+                
+                return date.match(/(\d{4}-\d{2}-\d{2}T\d+:\d+:\d+\.\d+)/)[1];
+            }
+            
+            let entityData;
+            
+            const removedProducts = [];
+            
+            window.addEventListener("allentitiesloaded", function() {
+                jQuery.get("http://localhost:8080/" + entityName + "/" + entityId).done(function(data) {
+                    entityData = data;
+                    
+                    console.log(data);
+                    
+                    if(entityName === "shops") {
+                        Array.from(document.querySelectorAll(".pick-one > input[type=radio][name]")).slice(1).forEach(function(radio) {
+                            if(data.shopGroup && JSON.parse(radio.value).id === data.shopGroup.id) {
+                                jQuery(radio).addClass("saved");
+                                radio.checked = true;
+                            }
+                        });
+                        
+                        document.querySelector("input[name=city]").value = (function() {
+                            try {
+                                return data.address.city;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        document.querySelector("input[name=country]").value = (function() {
+                            try {
+                                return data.address.country;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        document.querySelector("input[name=department]").value = (function() {
+                            try {
+                                return data.address.department;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        document.querySelector("input[name=postalCode]").value = (function() {
+                            try {
+                                return data.address.postalCode;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        /*  *
+                        
+                        document.querySelector("input[name=latitude]").value = (function() {
+                            try {
+                                return data.address.gpslocationPointer.location.latitude;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        document.querySelector("input[name=longitude]").value = (function() {
+                            try {
+                                return data.address.gpslocationPointer.location.longitude;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        /*  */
+                        
+                        const imagesDiv = document.querySelector(".addImage + div");
+                        
+                        if(data.images && data.images.images) {
+                            for(let i = 0; i < data.images.images.length; ++i) {
+                                const image = data.images.images[i];
+                                
+                                imagesDiv.appendChild((function() {
+                                    const div = makeImageDiv();
+                                    
+                                    div.setAttribute("save-id", image.id);
+                                    div.querySelector("[name=urlImage]").value = image.urlImage;
+                                    div.querySelector("[name=alternativeText]").value = image.alternativeText;
+                                    
+                                    return div;
+                                })());
+                            }
+                        }
+                        
+                        const productsDiv = document.querySelector(".products");
+                        
+                        for(let i = 0; i < data.products.length; ++i) {
+                            productsDiv.appendChild((function() {
+                                const span = document.createElement("span");
+                                
+                                span.className = "gridImage";
+                                // span.innerHTML = data.products[i].name;
+                                span.setAttribute("product-id", data.products[i].id);
+                                
+                                if(data.products[i].images && data.products[i].images.images.length > 0) {
+                                    span.innerHTML = '<img src="' + data.products[i].images.images[0].urlImage + '", alt="' + data.products[i].images.images[0].alternativeText + '">';
+                                }
+                                
+                                span.appendChild((function() {
+                                    const button = document.createElement("button");
+                                    
+                                    button.className = "rem";
+                                    button.innerHTML = "×";
+                                    
+                                    button.addEventListener("click", function() {
+                                        removedProducts.push(Number(span.getAttribute("product-id")));
+                                        span.remove();
+                                    });
+                                    
+                                    return button;
+                                })());
+                                
+                                span.appendChild((function() {
+                                    const span = document.createElement("span");
+                                    
+                                    span.className = "productName";
+                                    span.innerHTML = data.products[i].name;
+                                    
+                                    return span;
+                                })());
+                                
+                                return span;
+                            })());
+                        }
+                    }
+                    
+                    if(entityName === "shop-groups") {
+                        document.querySelector("input[name=name]").value = data.name;
+                        
+                        document.querySelector("input[name=urlImage]").value = (function() {
+                            try {
+                                return data.logo.urlImage;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                        
+                        document.querySelector("input[name=alternativeText]").value = (function() {
+                            try {
+                                return data.logo.alternativeText;
+                            } catch(e) {
+                                return null;
+                            }
+                        })();
+                    }
+                    
+                    if(entityName === "products") {
+                        jQuery.get("http://localhost:8080/shops/having-product/" + entityId).done(function(shop) {
+                            console.log(shop);
+                            Array.from(document.querySelectorAll(".pick-one > input[type=radio][name]")).slice(1).forEach(function(radio) {
+                                if(radio.getAttribute("entity-id") == shop.id) {
+                                    jQuery(radio).addClass("saved");
+                                    radio.checked = true;
+                                }
+                            });
+                        });
+                        
+                        document.querySelector("input[name=name]").value = data.name;
+                        document.querySelector("input[name=price]").value = data.price;
+                        document.querySelector("input[name=stock]").value = data.stock;
+                        
+                        const imagesDiv = document.querySelector(".addImage + div");
+                        
+                        if(data.images && data.images.images) {
+                            for(let i = 0; i < data.images.images.length; ++i) {
+                                const image = data.images.images[i];
+                                
+                                imagesDiv.appendChild((function() {
+                                    const div = makeImageDiv();
+                                    
+                                    div.setAttribute("save-id", image.id);
+                                    div.querySelector("[name=urlImage]").value = image.urlImage;
+                                    div.querySelector("[name=alternativeText]").value = image.alternativeText;
+                                    
+                                    return div;
+                                })());
+                            }
+                        }
+                    }
+                    
+                    if(entityName === "offers") {
+                        Array.from(document.querySelectorAll(".pick-one > input[type=radio][name]")).slice(1).forEach(function(radio) {
+                            if(JSON.parse(radio.value).id === data.product.id) {
+                                jQuery(radio).addClass("saved");
+                                radio.checked = true;
+                            }
+                        });
+                        
+                        document.querySelector("input[name=discountPrice]").value = data.discountPrice;
+                        document.querySelector("input[name=discountQuantity]").value = data.discountQuantity;
+                        document.querySelector("input[name=start]").value = dateToDateTimeLocal(data.start);
+                        document.querySelector("input[name=end]").value = dateToDateTimeLocal(data.end);
+                    }
+                    
+                });
+            });
+            
+            const submitButton = document.querySelector(".form > .submit");
+            
+            submitButton.innerHTML = "Modifier";
+            
+            submitButton.addEventListener("click", function() {
+                let data = {
+                    id: entityId,
+                };
+                
+                if(entityName === "shops") {
+                    data.shopGroup = JSON.parse(document.querySelector("[name=shopGroups]:checked").value);
+                    
+                    const location = {
+                        // latitude: document.querySelector("[name=latitude]").value,
+                        // longitude: document.querySelector("[name=longitude]").value,
+                        latitude: "",
+                        longitude: "",
+                    };
+                    
+                    try {
+                        location.id = entityData.address.gpslocationPointer.location.id;
+                    } catch(e) {
+                        console.warn(e);
+                    }
+                    
+                    const gpslocationPointer = {
+                        location: location,
+                    };
+                    
+                    try {
+                        gpslocationPointer.id = entityData.address.gpslocationPointer.id;
+                    } catch(e) {
+                        console.warn(e);
+                    }
+                    
+                    data.address = {
+                        id: entityData.address.id,
+                        city: document.querySelector("[name=city]").value,
+                        country: document.querySelector("[name=country]").value,
+                        department: document.querySelector("[name=department]").value,
+                        postalCode: document.querySelector("[name=postalCode]").value,
+                        gpslocationPointer: gpslocationPointer,
+                    };
+                    
+                    data.images = {
+                        id: entityData.images.id,
+                        images: [],
+                    };
+                    
+                    const imageDivs = document.querySelector(".addImage + div").children;
+                    
+                    for(let i = 0; i < imageDivs.length; ++i) {
+                        const imageDiv = imageDivs[i];
+                        
+                        const imageData = {
+                            urlImage: imageDiv.querySelector("[name=urlImage]").value,
+                            alternativeText: imageDiv.querySelector("[name=alternativeText]").value,
+                        };
+                        
+                        if(imageDiv.hasAttribute("save-id")) {
+                            imageData.id = Number(imageDiv.getAttribute("save-id"));
+                        }
+                        
+                        data.images.images.push(imageData);
+                    }
+                    
+                    // data.products = entityData.products;
+                    data.removedProducts = removedProducts;
+                    data.offers = entityData.offers;
+                }
+                
+                if(entityName === "shop-groups") {
+                    data.name = document.querySelector("[name=name]").value;
+                    
+                    if(entityData.logo) {
+                        data.logo = {
+                            id: entityData.logo.id,
+                            urlImage: document.querySelector("[name=urlImage]").value,
+                            alternativeText: document.querySelector("[name=alternativeText]").value,
+                        };
+                    } else {
+                        data.logo = {
+                            urlImage: document.querySelector("[name=urlImage]").value,
+                            alternativeText: document.querySelector("[name=alternativeText]").value,
+                        };
+                    }
+                }
+                
+                if(entityName === "products") {
+                    data.shopId = (function() {
+                        const shop = JSON.parse(document.querySelector("[name=shops]:checked").value);
+                        
+                        if(shop) {
+                            return shop.id;
+                        }
+                        
+                        return 0;
+                    })();
+                    
+                    data.name = document.querySelector("[name=name]").value;
+                    data.price = Number(document.querySelector("[name=price]").value);
+                    data.stock = Number(document.querySelector("[name=stock]").value);
+                    
+                    data.images = {
+                        id: entityData.images.id,
+                        images: [],
+                    };
+                    
+                    const imageDivs = document.querySelector(".addImage + div").children;
+                    
+                    for(let i = 0; i < imageDivs.length; ++i) {
+                        const imageDiv = imageDivs[i];
+                        
+                        const imageData = {
+                            urlImage: imageDiv.querySelector("[name=urlImage]").value,
+                            alternativeText: imageDiv.querySelector("[name=alternativeText]").value,
+                        };
+                        
+                        if(imageDiv.hasAttribute("save-id")) {
+                            imageData.id = Number(imageDiv.getAttribute("save-id"));
+                        }
+                        
+                        data.images.images.push(imageData);
+                    }
+                }
+                
+                if(entityName === "offers") {
+                    data.discountPrice = Number(document.querySelector("[name=discountPrice]").value);
+                    data.discountQuantity = Number(document.querySelector("[name=discountQuantity]").value);
+                    data.start = document.querySelector("[name=start]").value;
+                    data.end = document.querySelector("[name=end]").value;
+                    
+                    data.product = JSON.parse(document.querySelector("[name=products]:checked").value);
+                }
+                
+                console.log(data);
+                // return;
+                
+                if(entityName === "shops") {
+                    jQuery.ajax({
+                        url: "http://localhost:8080/shops/" + entityId + "/product",
+                        type: "PUT",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(result) {
+                            location.href = "/admin/" + entityName;
+                        },
+                    });
+                } else if(entityName === "products") {
+                    jQuery.ajax({
+                        url: "http://localhost:8080/products/of-shop/" + entityId,
+                        type: "PUT",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(result) {
+                            location.href = "/admin/" + entityName;
+                        },
+                    });
+                } else {
+                    jQuery.ajax({
+                        url: "http://localhost:8080/" + entityName + "/" + entityId,
+                        type: "PUT",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(result) {
+                            location.href = "/admin/" + entityName;
+                        },
+                    });
+                }
+            });
+        }
+        
+        </script>
+    </body>
+</html>

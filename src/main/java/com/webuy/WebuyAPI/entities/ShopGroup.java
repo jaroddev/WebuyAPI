@@ -2,6 +2,7 @@ package com.webuy.WebuyAPI.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class ShopGroup implements Serializable {
 	private Long id;
 	private String name;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Image logo;
 
 	public Long getId() {
